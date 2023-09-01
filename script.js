@@ -7,6 +7,15 @@ window.$g = $g;
 
 astronaut.unpack();
 
+const WORKING_AREA_STYLES = new astronaut.StyleGroup([
+    new astronaut.StyleSet({
+        "background-color": "hsl(165, 70%, 90%)"
+    }),
+    new astronaut.MediaQueryStyleSet("prefers-color-scheme: dark", {
+        "background-color": "hsl(165, 70%, 15%)"
+    })
+]);
+
 $g.waitForLoad().then(function() {
     $g.sel("head").add($g.create("link")
         .setAttribute("rel", "stylesheet")
@@ -39,6 +48,25 @@ $g.waitForLoad().then(function() {
             HeaderActionButton() (Icon({icon: "star"}) ())
         ),
         Page(true) (
+            Section({
+                styleSets: [WORKING_AREA_STYLES],
+                styles: {
+                    height: "6rem",
+                    paddingTop: "1.5rem",
+                    paddingBottom: "0.5rem",
+                    paddingLeft: "1rem",
+                    paddingRight: "1rem",
+                    fontSize: "var(--sizeH1)",
+                    fontWeight: "bold",
+                    textAlign: "end",
+                    overflowX: "auto",
+                    whiteSpace: "nowrap",
+                    outline: "none"
+                },
+                attributes: {
+                    "contenteditable": "plaintext-only"
+                }
+            }) ("123"),
             Section (
                 Heading() ("Hello, world!"),
                 Paragraph() ("This is the calculator app which is currently in-development."),
