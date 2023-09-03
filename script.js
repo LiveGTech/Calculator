@@ -61,12 +61,10 @@ $g.waitForLoad().then(function() {
                     textAlign: "end",
                     overflowX: "auto",
                     whiteSpace: "nowrap",
-                    outline: "none"
-                },
-                attributes: {
-                    "contenteditable": "plaintext-only"
+                    outline: "none",
+                    userSelect: "default"
                 }
-            }) ("123"),
+            }) ().setHTML(`<math><msqrt><mn>123</mn></msqrt></math>`),
             Section (
                 Heading() ("Hello, world!"),
                 Paragraph() ("This is the calculator app which is currently in-development."),
