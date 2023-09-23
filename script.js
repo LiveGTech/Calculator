@@ -5,7 +5,7 @@ var astronaut = await import(`${common.AUI_URL_PREFIX}/astronaut/astronaut.js`);
 
 window.FORMULAIC_AUI_URL_PREFIX = common.AUI_URL_PREFIX;
 
-import * as richMaths from "./lib/formulaic/richeditor/richmaths.js";
+var richMaths = await import("./lib/formulaic/richeditor/richmaths.js");
 
 window.$g = $g;
 
