@@ -1,0 +1,3 @@
+[submodule "lib/formulaic"]
+	path = lib/formulaic
+	url = https://github.com/LiveGTech/Formulaic.git
