@@ -72,6 +72,9 @@ $g.waitForLoad().then(function() {
                     inline: true,
                     styles: {
                         display: "block"
+                    },
+                    attributes: {
+                        "inputmode": "none"
                     }
                 })
             ),
