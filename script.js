@@ -93,11 +93,11 @@ var PadButton = astronaut.component("PadButton", function(props, children) {
 
 $g.waitForLoad().then(function() {
     $g.sel("head").add($g.create("link")
-    .setAttribute("rel", "stylesheet")
-    .setAttribute("href", `${common.AUI_URL_PREFIX}/src/adaptui.css`)
-    .on("load", function() {
-        $g.sel("body").removeAttribute("hidden");
-    })
+        .setAttribute("rel", "stylesheet")
+        .setAttribute("href", `${common.AUI_URL_PREFIX}/src/adaptui.css`)
+        .on("load", function() {
+            $g.sel("body").removeAttribute("hidden");
+        })
     );
 
     $g.theme.setProperty("primaryHue", "165");
