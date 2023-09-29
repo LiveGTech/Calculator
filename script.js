@@ -144,9 +144,18 @@ var PadButton = astronaut.component("PadButton", function(props, children) {
         styleSets: [
             PAD_BUTTON_STYLES,
             ...(props.type == "basic" ? [PAD_BUTTON_TYPE_BASIC_STYLES] : []),
-            ...(props.shrinkText ? [PAD_BUTTON_SHRINK_TEXT_STYLES] : [])
+            ...(props.shrinkText || props.type == "advanced" ? [PAD_BUTTON_SHRINK_TEXT_STYLES] : [])
         ]
     }) (...children);
+});
+
+var AdvancedPadPage = astronaut.component("AdvancedPadPage", function(props, children) {
+    return Container({
+        ...props,
+        styleSets: [ADVANCED_PAD_GRID_STYLES]
+    }) (
+        ...children
+    )
 });
 
 function numericBasic(value) {
@@ -227,9 +236,31 @@ $g.waitForLoad().then(function() {
                             flexGrow: "1"
                         }
                     }) (
-                        ...astronaut.repeat(5, Container({
-                            styleSets: [ADVANCED_PAD_GRID_STYLES]
-                        }) (
+                        AdvancedPadPage() (
+                            textualAdvanced("INV"),
+                            textualAdvanced("DRG"),
+                            textualAdvanced("π", {alt: "Pi"}),
+                            textualAdvanced("log", {alt: "Logarithm (base 10)"}),
+                            textualAdvanced("ln", {alt: "Logarithm (base e)"}),
+                            textualAdvanced("sin", {alt: "Sine"}),
+                            textualAdvanced("cos", {alt: "Cosine"}),
+                            textualAdvanced("tan", {alt: "Tangent"}),
+                            textualAdvanced("x^3", {alt: "Cube"}),
+                            textualAdvanced("root", {alt: "Root"})
+                        ),
+                        AdvancedPadPage() (
+                            textualAdvanced("INV"),
+                            textualAdvanced("mod", {alt: "Modulo"}),
+                            textualAdvanced("x^-1", {alt: "Reciprocal"}),
+                            textualAdvanced("log2", {alt: "Logarithm (base 2)"}),
+                            textualAdvanced("logab", {alt: "Logarithm (base n)"}),
+                            textualAdvanced("sinh", {alt: "Hyperbolic sine"}),
+                            textualAdvanced("cos", {alt: "Hyperbolic cosine"}),
+                            textualAdvanced("tan", {alt: "Hyperbolic tangent"}),
+                            textualAdvanced("|x|", {alt: "Absolute value"}),
+                            textualAdvanced("n!", {alt: "Factorial"})
+                        ),
+                        ...astronaut.repeat(3, AdvancedPadPage() (
                             ...astronaut.repeat(10, textualAdvanced("sin"))
                         ))
                     )
@@ -237,8 +268,8 @@ $g.waitForLoad().then(function() {
                 Section({
                     styleSets: [BASIC_PAD_STYLES]
                 }) (
-                    textualBasic("AC", {alt: "Clear all input"}), textualBasic("("), textualBasic(")"), textualBasic("x^2", {shrinkText: true}), textualBasic("x^[]", {shrinkText: true}),
-                    numericBasic(7), numericBasic(8), numericBasic(9), textualBasic("sqrt", {shrinkText: true}), textualBasic("frac", {shrinkText: true}),
+                    textualBasic("AC", {alt: "Clear all input"}), textualBasic("("), textualBasic(")"), textualBasic("x^2", {alt: "Square", shrinkText: true}), textualBasic("x^[]", {alt: "Power", shrinkText: true}),
+                    numericBasic(7), numericBasic(8), numericBasic(9), textualBasic("sqrt", {alt: "Square root", shrinkText: true}), textualBasic("frac", {alt: "Fraction", shrinkText: true}),
                     numericBasic(4), numericBasic(5), numericBasic(6), textualBasic("×", {alt: "Multiply"}), textualBasic("÷", {alt: "Divide"}),
                     numericBasic(1), numericBasic(2), numericBasic(3), textualBasic("+", {alt: "Add"}), textualBasic("−", {alt: "Subtract"}),
                     numericBasic(0), textualBasic("."), textualBasic("x10^", {alt: "Exponent", shrinkText: true}), textualBasic("bksp", {alt: "Backspace", shrinkText: true}),
