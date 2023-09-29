@@ -19,6 +19,7 @@ const WORKING_AREA_STYLES = new astronaut.StyleGroup([
         "padding-bottom": "0.5rem!important",
         "padding-left": "1rem!important",
         "padding-right": "1rem!important",
+        "direction": "ltr",
         "font-size": "var(--sizeH1)",
         "font-weight": "bold",
         "overflow-x": "auto",
@@ -42,20 +43,21 @@ const PAD_AREA_STYLES = new astronaut.StyleGroup([
     })
 ]);
 
-const BASIC_AREA_STYLES = new astronaut.StyleGroup([
+const BASIC_PAD_STYLES = new astronaut.StyleGroup([
     new astronaut.StyleSet({
         "display": "grid",
-        "grid-template-columns": "repeat(5, 1fr)",
+        "grid-template-columns": "repeat(5, minmax(0, 1fr))",
         "padding": "0.5rem!important",
         "flex-grow": "1",
-        "gap": "0.5rem"
+        "gap": "0.5rem",
+        "direction": "ltr",
     }),
     new astronaut.MediaQueryStyleSet("min-aspect-ratio: 1 / 1", {
         "padding-bottom": "2.4rem!important"
     })
 ]);
 
-const ADVANCED_PAD_AREA_STYLES = new astronaut.StyleGroup([
+const ADVANCED_PAD_STYLES = new astronaut.StyleGroup([
     new astronaut.StyleSet({
         "display": "flex",
         "flex-direction": "column",
@@ -75,21 +77,89 @@ const ADVANCED_PAD_GRID_STYLES = new astronaut.StyleGroup([
         "display": "grid",
         "grid-template-columns": "repeat(5, 1fr)",
         "padding": "0.5rem",
-        "gap": "0.5rem"
+        "gap": "0.5rem",
+        "direction": "ltr"
     }),
     new astronaut.MediaQueryStyleSet("min-aspect-ratio: 1 / 1", {
-        "grid-template-columns": "repeat(2, 1fr)"
+        "direction": "rtl",
+        "grid-template-rows": "repeat(5, 1fr)",
+        "grid-auto-flow": "column",
+        "grid-template-columns": "unset"
+    }),
+    new astronaut.MediaQueryStyleSet("min-aspect-ratio: 1 / 1", {
+        "direction": "ltr"
+    }, "[dir='rtl'] *")
+]);
+
+const PAD_BUTTON_STYLES = new astronaut.StyleGroup([
+    new astronaut.StyleSet({
+        "flex-grow": "1",
+        "flex-shrink": "1",
+        "flex-basis": "0",
+        "margin": "0",
+        "direction": "initial",
+        "font-size": "1.5rem"
+    }),
+    new astronaut.StyleSet({
+        "direction": "rtl"
+    }, "[dir='rtl'] *")
+]);
+
+const PAD_BUTTON_TYPE_BASIC_STYLES = new astronaut.StyleGroup([
+    new astronaut.StyleSet({
+        "background-color": "hsl(165, 70%, 90%)!important",
+        "color": "black!important"
+    }),
+    new astronaut.StyleSet({
+        "background-color": "hsl(165, 70%, 85%)!important"
+    }, "html[aui-istouch='false'] :hover, :active"),
+    new astronaut.MediaQueryStyleSet("prefers-color-scheme: dark", {
+        "background-color": "hsl(165, 70%, 15%)!important",
+        "color": "white!important"
+    }),
+    new astronaut.MediaQueryStyleSet("prefers-color-scheme: dark", {
+        "background-color": "hsl(165, 70%, 20%)!important"
+    }, "html[aui-istouch='false'] :hover, :active")
+]);
+
+const PAD_BUTTON_SHRINK_TEXT_STYLES = new astronaut.StyleGroup([
+    new astronaut.MediaQueryStyleSet("max-width: 500px", {
+        "font-size": "1rem"
     })
 ]);
 
 var PadButton = astronaut.component("PadButton", function(props, children) {
+    props.type ||= "basic";
+
+    if (props.alt) {
+        props.attributes ||= {};
+        props.attributes["title"] = props.alt;
+        props.attributes["aria-label"] = props.alt;
+    }
+
     return Button({
-        styles: {
-            margin: "0",
-            fontSize: "1.5rem"
-        }
+        ...props,
+        mode: props.type != "highlight" ? "secondary" : "primary",
+        iconType: "dark embedded",
+        styleSets: [
+            PAD_BUTTON_STYLES,
+            ...(props.type == "basic" ? [PAD_BUTTON_TYPE_BASIC_STYLES] : []),
+            ...(props.shrinkText ? [PAD_BUTTON_SHRINK_TEXT_STYLES] : [])
+        ]
     }) (...children);
 });
+
+function numericBasic(value) {
+    return PadButton() (String(value));
+}
+
+function textualBasic(value, props) {
+    return PadButton(props) (value);
+}
+
+function textualAdvanced(value, props) {
+    return PadButton({...props, type: "advanced"}) (value);
+}
 
 $g.waitForLoad().then(function() {
     $g.sel("head").add($g.create("link")
@@ -149,7 +219,7 @@ $g.waitForLoad().then(function() {
                 styleSets: [PAD_AREA_STYLES]
             }) (
                 Container({
-                    styleSets: [ADVANCED_PAD_AREA_STYLES]
+                    styleSets: [ADVANCED_PAD_STYLES]
                 }) (
                     ScrollableScreenContainer({
                         mode: "paginated",
@@ -160,14 +230,19 @@ $g.waitForLoad().then(function() {
                         ...astronaut.repeat(5, Container({
                             styleSets: [ADVANCED_PAD_GRID_STYLES]
                         }) (
-                            ...astronaut.repeat(10, PadButton() ("sin"))
+                            ...astronaut.repeat(10, textualAdvanced("sin"))
                         ))
                     )
                 ),
                 Section({
-                    styleSets: [BASIC_AREA_STYLES]
+                    styleSets: [BASIC_PAD_STYLES]
                 }) (
-                    ...astronaut.repeat(25, PadButton() ("="))
+                    textualBasic("AC", {alt: "Clear all input"}), textualBasic("("), textualBasic(")"), textualBasic("x^2", {shrinkText: true}), textualBasic("x^[]", {shrinkText: true}),
+                    numericBasic(7), numericBasic(8), numericBasic(9), textualBasic("sqrt", {shrinkText: true}), textualBasic("frac", {shrinkText: true}),
+                    numericBasic(4), numericBasic(5), numericBasic(6), textualBasic("×", {alt: "Multiply"}), textualBasic("÷", {alt: "Divide"}),
+                    numericBasic(1), numericBasic(2), numericBasic(3), textualBasic("+", {alt: "Add"}), textualBasic("−", {alt: "Subtract"}),
+                    numericBasic(0), textualBasic("."), textualBasic("x10^", {alt: "Exponent", shrinkText: true}), textualBasic("bksp", {alt: "Backspace", shrinkText: true}),
+                    PadButton({type: "highlight", alt: "Evaluate"}) ("=")
                 )
             )
         )
