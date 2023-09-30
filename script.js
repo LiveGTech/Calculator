@@ -268,7 +268,7 @@ $g.waitForLoad().then(function() {
                 Section({
                     styleSets: [BASIC_PAD_STYLES]
                 }) (
-                    textualBasic("AC", {alt: "Clear all input"}), textualBasic("("), textualBasic(")"), textualBasic("x^2", {alt: "Square", shrinkText: true}), textualBasic("x^[]", {alt: "Power", shrinkText: true}),
+                    textualBasic("AC", {alt: "Clear all input"}), textualBasic("( )"), textualBasic(","), textualBasic("x^2", {alt: "Square", shrinkText: true}), textualBasic("x^[]", {alt: "Power", shrinkText: true}),
                     numericBasic(7), numericBasic(8), numericBasic(9), textualBasic("sqrt", {alt: "Square root", shrinkText: true}), textualBasic("frac", {alt: "Fraction", shrinkText: true}),
                     numericBasic(4), numericBasic(5), numericBasic(6), textualBasic("×", {alt: "Multiply"}), textualBasic("÷", {alt: "Divide"}),
                     numericBasic(1), numericBasic(2), numericBasic(3), textualBasic("+", {alt: "Add"}), textualBasic("−", {alt: "Subtract"}),
