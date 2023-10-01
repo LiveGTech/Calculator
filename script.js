@@ -255,8 +255,8 @@ $g.waitForLoad().then(function() {
                             textualAdvanced("log2", {alt: "Logarithm (base 2)"}),
                             textualAdvanced("logab", {alt: "Logarithm (base n)"}),
                             textualAdvanced("sinh", {alt: "Hyperbolic sine"}),
-                            textualAdvanced("cos", {alt: "Hyperbolic cosine"}),
-                            textualAdvanced("tan", {alt: "Hyperbolic tangent"}),
+                            textualAdvanced("cosh", {alt: "Hyperbolic cosine"}),
+                            textualAdvanced("tanh", {alt: "Hyperbolic tangent"}),
                             textualAdvanced("|x|", {alt: "Absolute value"}),
                             textualAdvanced("n!", {alt: "Factorial"})
                         ),
