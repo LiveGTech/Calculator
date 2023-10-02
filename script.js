@@ -236,6 +236,7 @@ $g.waitForLoad().then(function() {
                             flexGrow: "1"
                         }
                     }) (
+                        // FIXME: Buttons should go from bottom to top
                         AdvancedPadPage() (
                             textualAdvanced("INV"),
                             textualAdvanced("DRG"),
@@ -260,7 +261,19 @@ $g.waitForLoad().then(function() {
                             textualAdvanced("|x|", {alt: "Absolute value"}),
                             textualAdvanced("n!", {alt: "Factorial"})
                         ),
-                        ...astronaut.repeat(3, AdvancedPadPage() (
+                        AdvancedPadPage() (
+                            textualAdvanced("SET"),
+                            textualAdvanced("x?", {alt: "Evaluate in terms of x"}),
+                            textualAdvanced("x<>y", {alt: "Swap x and y values"}),
+                            textualAdvanced("d/dx", {alt: "Derivative"}),
+                            textualAdvanced("itg", {alt: "Integral"}),
+                            textualAdvanced("x"),
+                            textualAdvanced("y"),
+                            textualAdvanced("i"),
+                            textualAdvanced("d/dx2", {alt: "Second derivative"}),
+                            textualAdvanced("itg2", {alt: "Double integral"})
+                        ),
+                        ...astronaut.repeat(2, AdvancedPadPage() (
                             ...astronaut.repeat(10, textualAdvanced("sin"))
                         ))
                     )
