@@ -11,6 +11,19 @@ window.$g = $g;
 
 astronaut.unpack();
 
+const HEADER_STYLES = new astronaut.StyleGroup([
+    new astronaut.MediaQueryStyleSet("max-height: 350px", {
+        "display": "none"
+    })
+]);
+
+const MAIN_STYLES = new astronaut.StyleGroup([
+    new astronaut.MediaQueryStyleSet("max-height: 350px", {
+        "top": "0",
+        "height": "100%"
+    })
+]);
+
 const WORKING_AREA_STYLES = new astronaut.StyleGroup([
     new astronaut.StyleSet({
         "background-color": "hsl(165, 70%, 90%)",
@@ -29,6 +42,10 @@ const WORKING_AREA_STYLES = new astronaut.StyleGroup([
     }),
     new astronaut.MediaQueryStyleSet("prefers-color-scheme: dark", {
         "background-color": "hsl(165, 70%, 15%)"
+    }),
+    new astronaut.MediaQueryStyleSet("max-height: 350px", {
+        "height": "4rem",
+        "padding-top": "0.5rem!important"
     })
 ]);
 
@@ -50,7 +67,7 @@ const BASIC_PAD_STYLES = new astronaut.StyleGroup([
         "padding": "0.5rem!important",
         "flex-grow": "1",
         "gap": "0.5rem",
-        "direction": "ltr",
+        "direction": "ltr"
     }),
     new astronaut.MediaQueryStyleSet("min-aspect-ratio: 1 / 1", {
         "padding-bottom": "2.4rem!important"
@@ -69,6 +86,9 @@ const ADVANCED_PAD_STYLES = new astronaut.StyleGroup([
         "max-width": "20rem",
         "height": "unset",
         "padding-bottom": "0.5rem"
+    }),
+    new astronaut.MediaQueryStyleSet(["(max-aspect-ratio: 1 / 1) and (max-height: 500px)"], {
+        "display": "none"
     })
 ]);
 
@@ -97,12 +117,16 @@ const PAD_BUTTON_STYLES = new astronaut.StyleGroup([
         "flex-shrink": "1",
         "flex-basis": "0",
         "margin": "0",
+        "padding": "0",
         "direction": "initial",
         "font-size": "1.5rem"
     }),
     new astronaut.StyleSet({
         "direction": "rtl"
-    }, "[dir='rtl'] *")
+    }, "[dir='rtl'] *"),
+    new astronaut.MediaQueryStyleSet(["(max-width: 300px), (max-height: 400px)"], {
+        "font-size": "1rem"
+    })
 ]);
 
 const PAD_BUTTON_TYPE_BASIC_STYLES = new astronaut.StyleGroup([
@@ -123,7 +147,7 @@ const PAD_BUTTON_TYPE_BASIC_STYLES = new astronaut.StyleGroup([
 ]);
 
 const PAD_BUTTON_SHRINK_TEXT_STYLES = new astronaut.StyleGroup([
-    new astronaut.MediaQueryStyleSet("max-width: 500px", {
+    new astronaut.MediaQueryStyleSet(["(max-width: 400px), (min-aspect-ratio: 1 / 1) and (max-width: 600px)"], {
         "font-size": "1rem"
     })
 ]);
@@ -197,12 +221,13 @@ $g.waitForLoad().then(function() {
     $g.theme.setProperty("dark-secondaryUIText", "rgb(255, 255, 255)");
     
     astronaut.render(Screen(true) (
-        Header (
+        Header({styleSets: [HEADER_STYLES]}) (
             Text("Calculator"),
             HeaderActionButton() (Icon({icon: "star"}) ())
         ),
         Page({
             showing: true,
+            styleSets: [MAIN_STYLES],
             styles: {
                 display: "flex",
                 flexDirection: "column"
