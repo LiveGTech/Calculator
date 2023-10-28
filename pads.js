@@ -131,6 +131,17 @@ export var PadButton = astronaut.component("PadButton", function(props, children
         props.attributes["aria-label"] = props.alt;
     }
 
+    var specificStyles = [];
+
+    if (props.landscapeRow && props.landscapeColumn) {
+        specificStyles.push(
+            new astronaut.MediaQueryStyleSet("min-aspect-ratio: 1 / 1", {
+                "grid-row": props.landscapeRow,
+                "grid-column": props.landscapeColumn
+            })
+        );
+    }
+
     return Button({
         ...props,
         mode: props.type != "highlight" ? "secondary" : "primary",
@@ -139,7 +150,8 @@ export var PadButton = astronaut.component("PadButton", function(props, children
             PAD_BUTTON_STYLES,
             ...(props.type == "basic" ? [PAD_BUTTON_TYPE_BASIC_STYLES] : []),
             ...(props.type == "advanced" ? [PAD_BUTTON_TYPE_ADVANCED_STYLES] : []),
-            ...(props.shrinkText || props.type == "advanced" ? [PAD_BUTTON_SHRINK_TEXT_STYLES] : [])
+            ...(props.shrinkText || props.type == "advanced" ? [PAD_BUTTON_SHRINK_TEXT_STYLES] : []),
+            ...specificStyles
         ]
     }) (...children);
 });
@@ -220,11 +232,16 @@ export var AdvancedPad = astronaut.component("AdvancedPad", function(props, chil
 });
 
 export var BasicPad = astronaut.component("BasicPad", function(props, children) {
+    var square = textualBasic("x^2", {alt: "Square", shrinkText: true, landscapeRow: 2, landscapeColumn: 5});
+    var power = textualBasic("x^[]", {alt: "Power", shrinkText: true, landscapeRow: 1, landscapeColumn: 5});
+    var squareRoot = textualBasic("sqrt", {alt: "Square root", shrinkText: true, landscapeRow: 2, landscapeColumn: 4});
+    var fraction = textualBasic("frac", {alt: "Fraction", shrinkText: true, landscapeRow: 1, landscapeColumn: 4});
+
     return Section({
         styleSets: [BASIC_PAD_STYLES]
     }) (
-        textualBasic("AC", {alt: "Clear all input"}), textualBasic("( )"), textualBasic(","), textualBasic("x^2", {alt: "Square", shrinkText: true}), textualBasic("x^[]", {alt: "Power", shrinkText: true}),
-        numericBasic(7), numericBasic(8), numericBasic(9), textualBasic("sqrt", {alt: "Square root", shrinkText: true}), textualBasic("frac", {alt: "Fraction", shrinkText: true}),
+        textualBasic("AC", {alt: "Clear all input"}), textualBasic("( )"), textualBasic(","), square, power,
+        numericBasic(7), numericBasic(8), numericBasic(9), squareRoot, fraction,
         numericBasic(4), numericBasic(5), numericBasic(6), textualBasic("×", {alt: "Multiply"}), textualBasic("÷", {alt: "Divide"}),
         numericBasic(1), numericBasic(2), numericBasic(3), textualBasic("+", {alt: "Add"}), textualBasic("−", {alt: "Subtract"}),
         numericBasic(0), textualBasic("."), textualBasic("x10^", {alt: "Exponent", shrinkText: true}), textualBasic("bksp", {alt: "Backspace", shrinkText: true}),
