@@ -213,7 +213,7 @@ export var AdvancedPad = astronaut.component("AdvancedPad", function(props, chil
                 textualAdvanced("n!", {alt: "Factorial"})
             ),
             AdvancedPadPage() (
-                textualAdvanced("SET"),
+                textualAdvanced("SET", {alt: "Assign value to variable"}),
                 textualAdvanced("x?", {alt: "Evaluate in terms of x"}),
                 textualAdvanced("x<>y", {alt: "Swap x and y values"}),
                 textualAdvanced("d/dx", {alt: "Derivative"}),
@@ -224,9 +224,21 @@ export var AdvancedPad = astronaut.component("AdvancedPad", function(props, chil
                 textualAdvanced("d/dx2", {alt: "Second derivative"}),
                 textualAdvanced("itg2", {alt: "Double integral"})
             ),
-            ...astronaut.repeat(2, AdvancedPadPage() (
+            AdvancedPadPage() (
+                textualAdvanced("BASE", {alt: "Change numeric base"}),
+                textualAdvanced("BITS", {alt: "Change bit width"}),
+                textualAdvanced("x<>y", {alt: "Enter ASCII character"}),
+                textualAdvanced("and"),
+                textualAdvanced("or"),
+                textualAdvanced("<<", {alt: "Bit shift left"}),
+                textualAdvanced(">>", {alt: "Bit shift right (arithmetic)"}),
+                textualAdvanced("not"),
+                textualAdvanced("nand"),
+                textualAdvanced("xor")
+            ),
+            AdvancedPadPage() (
                 ...astronaut.repeat(10, textualAdvanced("sin"))
-            ))
+            )
         )
     );
 });
