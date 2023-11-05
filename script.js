@@ -71,6 +71,16 @@ const PAD_AREA_STYLES = new astronaut.StyleGroup([
     })
 ]);
 
+export var editor = richMaths.format.createRichEditor({
+    inline: true,
+    styles: {
+        display: "block"
+    },
+    attributes: {
+        "inputmode": "none"
+    }
+});
+
 $g.waitForLoad().then(function() {
     $g.sel("head").add($g.create("link")
         .setAttribute("rel", "stylesheet")
@@ -116,15 +126,7 @@ $g.waitForLoad().then(function() {
                     flexShrink: "0"
                 }
             }) (
-                richMaths.format.createRichEditor({
-                    inline: true,
-                    styles: {
-                        display: "block"
-                    },
-                    attributes: {
-                        "inputmode": "none"
-                    }
-                })
+                editor
             ),
             Container ({
                 styleSets: [PAD_AREA_STYLES]
