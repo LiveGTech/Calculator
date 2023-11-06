@@ -258,7 +258,7 @@ export var BasicPad = astronaut.component("BasicPad", function(props, children) 
     var square = textualBasic("x^2", {alt: "Square", shrinkText: true, landscapeRow: 2, landscapeColumn: 5});
     var power = textualBasic("x^[]", {alt: "Power", shrinkText: true, landscapeRow: 1, landscapeColumn: 5});
     var squareRoot = textualBasic("sqrt", {alt: "Square root", insertText: "sqrt", shrinkText: true, landscapeRow: 2, landscapeColumn: 4});
-    var fraction = textualBasic("frac", {alt: "Fraction", shrinkText: true, landscapeRow: 1, landscapeColumn: 4});
+    var fraction = textualBasic("frac", {alt: "Fraction", insertText: "/", shrinkText: true, landscapeRow: 1, landscapeColumn: 4});
 
     var backspace = textualBasic("bksp", {alt: "Backspace", shrinkText: true});
 
@@ -283,8 +283,8 @@ export var BasicPad = astronaut.component("BasicPad", function(props, children) 
     }) (
         textualBasic("AC", {alt: "Clear all input"}), textualBasic("( )"), textualBasic(","), square, power,
         numericBasic(7), numericBasic(8), numericBasic(9), squareRoot, fraction,
-        numericBasic(4), numericBasic(5), numericBasic(6), textualBasic("×", {alt: "Multiply"}), textualBasic("÷", {alt: "Divide"}),
-        numericBasic(1), numericBasic(2), numericBasic(3), textualBasic("+", {alt: "Add"}), textualBasic("−", {alt: "Subtract"}),
+        numericBasic(4), numericBasic(5), numericBasic(6), textualBasic("×", {alt: "Multiply", insertText: "×"}), textualBasic("÷", {alt: "Divide", insertText: "÷"}),
+        numericBasic(1), numericBasic(2), numericBasic(3), textualBasic("+", {alt: "Add", insertText: "+"}), textualBasic("−", {alt: "Subtract", insertText: "-"}),
         numericBasic(0), textualBasic(".", {insertText: "."}), textualBasic("x10^", {alt: "Exponent", shrinkText: true}), backspace,
         PadButton({type: "highlight", alt: "Evaluate"}) ("=")
     );
