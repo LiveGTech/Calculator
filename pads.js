@@ -262,11 +262,21 @@ export var BasicPad = astronaut.component("BasicPad", function(props, children) 
 
     var backspace = textualBasic("bksp", {alt: "Backspace", shrinkText: true});
 
+    var lastFocusedEditorArea = null;
+
     backspace.on("click", function(event) {
         calculator.editor.inter.deleteTowardsStart();
 
         event.preventDefault();
+
+        lastFocusedEditorArea?.focus();
     });
+
+    setInterval(function() {
+        if (calculator.editor.get().contains(document.activeElement)) {
+            lastFocusedEditorArea = $g.sel(document.activeElement);
+        }
+    })
 
     return Section({
         styleSets: [BASIC_PAD_STYLES]
