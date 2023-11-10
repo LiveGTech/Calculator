@@ -14,6 +14,7 @@ var astronaut = await import(`${common.AUI_URL_PREFIX}/astronaut/astronaut.js`);
 
 window.FORMULAIC_AUI_URL_PREFIX = common.AUI_URL_PREFIX;
 
+var maths = await import("./lib/formulaic/src/maths.js");
 var richMaths = await import("./lib/formulaic/richeditor/richmaths.js");
 
 window.$g = $g;
@@ -80,6 +81,14 @@ export var editor = richMaths.format.createRichEditor({
         "inputmode": "none"
     }
 });
+
+export function evaluate() {
+    var expression = maths.engine.Expression.parse(editor.inter.getExpression());
+
+    expression.evaluate().then(function(result) {
+        editor.inter.getEditorArea().setText(result);
+    });
+}
 
 $g.waitForLoad().then(function() {
     $g.sel("head").add($g.create("link")

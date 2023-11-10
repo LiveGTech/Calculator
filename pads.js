@@ -261,6 +261,7 @@ export var BasicPad = astronaut.component("BasicPad", function(props, children) 
     var fraction = textualBasic("frac", {alt: "Fraction", insertText: "/", shrinkText: true, landscapeRow: 1, landscapeColumn: 4});
 
     var backspace = textualBasic("bksp", {alt: "Backspace", shrinkText: true});
+    var evaluate = PadButton({type: "highlight", alt: "Evaluate"}) ("=");
 
     var lastFocusedEditorArea = null;
 
@@ -270,6 +271,10 @@ export var BasicPad = astronaut.component("BasicPad", function(props, children) 
         event.preventDefault();
 
         lastFocusedEditorArea?.focus();
+    });
+
+    evaluate.on("click", function() {
+        calculator.evaluate();
     });
 
     setInterval(function() {
@@ -285,7 +290,6 @@ export var BasicPad = astronaut.component("BasicPad", function(props, children) 
         numericBasic(7), numericBasic(8), numericBasic(9), squareRoot, fraction,
         numericBasic(4), numericBasic(5), numericBasic(6), textualBasic("×", {alt: "Multiply", insertText: "×"}), textualBasic("÷", {alt: "Divide", insertText: "÷"}),
         numericBasic(1), numericBasic(2), numericBasic(3), textualBasic("+", {alt: "Add", insertText: "+"}), textualBasic("−", {alt: "Subtract", insertText: "-"}),
-        numericBasic(0), textualBasic(".", {insertText: "."}), textualBasic("x10^", {alt: "Exponent", shrinkText: true}), backspace,
-        PadButton({type: "highlight", alt: "Evaluate"}) ("=")
+        numericBasic(0), textualBasic(".", {insertText: "."}), textualBasic("x10^", {alt: "Exponent", shrinkText: true}), backspace, evaluate
     );
 })
