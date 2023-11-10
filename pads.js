@@ -256,9 +256,9 @@ export var AdvancedPad = astronaut.component("AdvancedPad", function(props, chil
 
 export var BasicPad = astronaut.component("BasicPad", function(props, children) {
     var square = textualBasic("x^2", {alt: "Square", shrinkText: true, landscapeRow: 2, landscapeColumn: 5});
-    var power = textualBasic("x^[]", {alt: "Power", shrinkText: true, landscapeRow: 1, landscapeColumn: 5});
+    var power = textualBasic("x^[]", {alt: "Power", insertText: "^", shrinkText: true, landscapeRow: 1, landscapeColumn: 5});
     var squareRoot = textualBasic("sqrt", {alt: "Square root", insertText: "sqrt", shrinkText: true, landscapeRow: 2, landscapeColumn: 4});
-    var fraction = textualBasic("frac", {alt: "Fraction", insertText: "/", shrinkText: true, landscapeRow: 1, landscapeColumn: 4});
+    var fraction = textualBasic("frac", {alt: "Fraction", insertText: "over", shrinkText: true, landscapeRow: 1, landscapeColumn: 4});
 
     var backspace = textualBasic("bksp", {alt: "Backspace", shrinkText: true});
     var evaluate = PadButton({type: "highlight", alt: "Evaluate"}) ("=");
