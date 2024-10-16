@@ -94,7 +94,10 @@ const PAD_BUTTON_STYLES = new astronaut.StyleGroup([
     }, "*", "img"),
     new astronaut.MediaQueryStyleSet(["(max-width: 300px), (max-height: 400px)"], {
         "font-size": "1rem"
-    })
+    }),
+    new astronaut.MediaQueryStyleSet(["(max-width: 300px), (max-height: 400px)"], {
+        "height": "1.25rem"
+    }, "*", "img")
 ]);
 
 const PAD_BUTTON_TYPE_BASIC_STYLES = new astronaut.StyleGroup([

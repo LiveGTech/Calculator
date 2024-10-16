@@ -55,6 +55,9 @@ const WORKING_AREA_STYLES = new astronaut.StyleGroup([
     new astronaut.MediaQueryStyleSet("prefers-color-scheme: dark", {
         "background-color": "hsl(165, 70%, 15%)"
     }),
+    new astronaut.MediaQueryStyleSet("min-height: 700px", {
+        "flex-grow": "1"
+    }),
     new astronaut.MediaQueryStyleSet("max-height: 350px", {
         "height": "4rem",
         "padding-top": "0.5rem!important"
