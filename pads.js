@@ -89,6 +89,9 @@ const PAD_BUTTON_STYLES = new astronaut.StyleGroup([
     new astronaut.StyleSet({
         "direction": "rtl"
     }, "[dir='rtl'] *"),
+    new astronaut.StyleSet({
+        "height": "2rem"
+    }, "*", "img"),
     new astronaut.MediaQueryStyleSet(["(max-width: 300px), (max-height: 400px)"], {
         "font-size": "1rem"
     })
@@ -123,12 +126,23 @@ const PAD_BUTTON_SHRINK_TEXT_STYLES = new astronaut.StyleGroup([
     })
 ]);
 
+const PAD_BUTTON_INCREASE_ICON_SIZE_STYLES = new astronaut.StyleGroup([
+    new astronaut.StyleSet({
+        "width": "66%",
+        "transform": "scale(1.5)"
+    }, "*", "img")
+]);
+
 export var PadButton = astronaut.component("PadButton", function(props, children) {
     props.type ||= "basic";
 
     if (props.alt) {
         props.attributes ||= {};
-        props.attributes["title"] = props.alt;
+
+        if (!props.noTitle) {
+            props.attributes["title"] = props.alt;
+        }
+
         props.attributes["aria-label"] = props.alt;
     }
 
@@ -143,7 +157,7 @@ export var PadButton = astronaut.component("PadButton", function(props, children
         );
     }
 
-    var button = Button({
+    var button = (props.icon ? IconButton : Button)({
         ...props,
         mode: props.type != "highlight" ? "secondary" : "primary",
         iconType: "dark embedded",
@@ -152,6 +166,7 @@ export var PadButton = astronaut.component("PadButton", function(props, children
             ...(props.type == "basic" ? [PAD_BUTTON_TYPE_BASIC_STYLES] : []),
             ...(props.type == "advanced" ? [PAD_BUTTON_TYPE_ADVANCED_STYLES] : []),
             ...(props.shrinkText || props.type == "advanced" ? [PAD_BUTTON_SHRINK_TEXT_STYLES] : []),
+            ...(props.increaseIconSize ? [PAD_BUTTON_INCREASE_ICON_SIZE_STYLES] : []),
             ...specificStyles
         ]
     }) (...children);
@@ -179,6 +194,14 @@ function textualAdvanced(value, props) {
     return PadButton({...props, type: "advanced"}) (value);
 }
 
+function iconBasic(icon, props) {
+    return PadButton({...props, icon}) ();
+}
+
+function iconAdvanced(icon, props) {
+    return PadButton({...props, icon, type: "advanced"}) ();
+}
+
 export var AdvancedPadPage = astronaut.component("AdvancedPadPage", function(props, children) {
     return Container({
         ...props,
@@ -202,26 +225,26 @@ export var AdvancedPad = astronaut.component("AdvancedPad", function(props, chil
             AdvancedPadPage() (
                 textualAdvanced("INV"),
                 textualAdvanced("DRG"),
-                textualAdvanced("π", {alt: "Pi"}),
+                iconAdvanced("maths-pi", {alt: "Pi"}),
                 textualAdvanced("log", {alt: "Logarithm (base 10)"}),
                 textualAdvanced("ln", {alt: "Logarithm (base e)"}),
                 textualAdvanced("sin", {alt: "Sine"}),
                 textualAdvanced("cos", {alt: "Cosine"}),
                 textualAdvanced("tan", {alt: "Tangent"}),
-                textualAdvanced("x^3", {alt: "Cube"}),
-                textualAdvanced("root", {alt: "Root"})
+                iconAdvanced("maths-cube", {alt: "Cube"}),
+                iconAdvanced("maths-root", {alt: "Root"})
             ),
             AdvancedPadPage() (
                 textualAdvanced("INV"),
                 textualAdvanced("mod", {alt: "Modulo"}),
-                textualAdvanced("x^-1", {alt: "Reciprocal"}),
+                iconAdvanced("maths-reciprocal", {alt: "Reciprocal"}),
                 textualAdvanced("log2", {alt: "Logarithm (base 2)"}),
                 textualAdvanced("logab", {alt: "Logarithm (base n)"}),
                 textualAdvanced("sinh", {alt: "Hyperbolic sine"}),
                 textualAdvanced("cosh", {alt: "Hyperbolic cosine"}),
                 textualAdvanced("tanh", {alt: "Hyperbolic tangent"}),
-                textualAdvanced("|x|", {alt: "Absolute value"}),
-                textualAdvanced("n!", {alt: "Factorial"})
+                iconAdvanced("maths-abs", {alt: "Absolute value"}),
+                iconAdvanced("maths-factorial", {alt: "Factorial"})
             ),
             AdvancedPadPage() (
                 textualAdvanced("SET", {alt: "Assign value to variable"}),
@@ -229,9 +252,9 @@ export var AdvancedPad = astronaut.component("AdvancedPad", function(props, chil
                 textualAdvanced("x<>y", {alt: "Swap x and y values"}),
                 textualAdvanced("d/dx", {alt: "Derivative"}),
                 textualAdvanced("itg", {alt: "Integral"}),
-                textualAdvanced("x"),
-                textualAdvanced("y"),
-                textualAdvanced("i"),
+                iconAdvanced("maths-x", {alt: "x", noTitle: true}),
+                iconAdvanced("maths-y", {alt: "y", noTitle: true}),
+                iconAdvanced("maths-i", {alt: "i", noTitle: true}),
                 textualAdvanced("d/dx2", {alt: "Second derivative"}),
                 textualAdvanced("itg2", {alt: "Double integral"})
             ),
@@ -255,12 +278,12 @@ export var AdvancedPad = astronaut.component("AdvancedPad", function(props, chil
 });
 
 export var BasicPad = astronaut.component("BasicPad", function(props, children) {
-    var square = textualBasic("x^2", {alt: "Square", shrinkText: true, landscapeRow: 2, landscapeColumn: 5});
-    var power = textualBasic("x^[]", {alt: "Power", insertText: "^", shrinkText: true, landscapeRow: 1, landscapeColumn: 5});
-    var squareRoot = textualBasic("sqrt", {alt: "Square root", insertText: "sqrt", shrinkText: true, landscapeRow: 2, landscapeColumn: 4});
-    var fraction = textualBasic("frac", {alt: "Fraction", insertText: "over", shrinkText: true, landscapeRow: 1, landscapeColumn: 4});
+    var square = iconBasic("maths-square", {alt: "Square", landscapeRow: 2, landscapeColumn: 5});
+    var power = iconBasic("maths-power", {alt: "Power", insertText: "^", landscapeRow: 1, landscapeColumn: 5});
+    var squareRoot = iconBasic("maths-sqrt", {alt: "Square root", insertText: "sqrt", landscapeRow: 2, landscapeColumn: 4});
+    var fraction = iconBasic("maths-frac", {alt: "Fraction", insertText: "over", increaseIconSize: true, landscapeRow: 1, landscapeColumn: 4});
 
-    var backspace = textualBasic("bksp", {alt: "Backspace", shrinkText: true});
+    var backspace = iconBasic("backspace", {alt: "Backspace"});
     var evaluate = PadButton({type: "highlight", alt: "Evaluate"}) ("=");
 
     var lastFocusedEditorArea = null;
@@ -290,6 +313,6 @@ export var BasicPad = astronaut.component("BasicPad", function(props, children) 
         numericBasic(7), numericBasic(8), numericBasic(9), squareRoot, fraction,
         numericBasic(4), numericBasic(5), numericBasic(6), textualBasic("×", {alt: "Multiply", insertText: "×"}), textualBasic("÷", {alt: "Divide", insertText: "÷"}),
         numericBasic(1), numericBasic(2), numericBasic(3), textualBasic("+", {alt: "Add", insertText: "+"}), textualBasic("−", {alt: "Subtract", insertText: "-"}),
-        numericBasic(0), textualBasic(".", {insertText: "."}), textualBasic("x10^", {alt: "Exponent", shrinkText: true}), backspace, evaluate
+        numericBasic(0), textualBasic(".", {insertText: "."}), iconBasic("maths-exp", {alt: "Exponent", increaseIconSize: true}), backspace, evaluate
     );
 })
