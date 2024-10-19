@@ -248,7 +248,7 @@ export var AdvancedPad = astronaut.component("AdvancedPad", function(props, chil
                 textualAdvanced("sinh", {alt: "Hyperbolic sine", insertText: "sinh("}),
                 textualAdvanced("cosh", {alt: "Hyperbolic cosine", insertText: "cosh("}),
                 textualAdvanced("tanh", {alt: "Hyperbolic tangent", insertText: "tanh("}),
-                iconAdvanced("maths-abs", {alt: "Absolute value", insertText: "abs("}),
+                iconAdvanced("maths-abs", {alt: "Absolute value", insertText: "abs"}),
                 iconAdvanced("maths-factorial", {alt: "Factorial"})
             ),
             AdvancedPadPage() (
