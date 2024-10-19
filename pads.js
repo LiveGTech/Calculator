@@ -147,6 +147,8 @@ export var PadButton = astronaut.component("PadButton", function(props, children
         }
 
         props.attributes["aria-label"] = props.alt;
+
+        props.alt = null;
     }
 
     var specificStyles = [];
@@ -229,24 +231,24 @@ export var AdvancedPad = astronaut.component("AdvancedPad", function(props, chil
                 textualAdvanced("INV"),
                 textualAdvanced("DRG"),
                 iconAdvanced("maths-pi", {alt: "Pi"}),
-                textualAdvanced("log", {alt: "Logarithm (base 10)"}),
-                textualAdvanced("ln", {alt: "Logarithm (base e)"}),
-                textualAdvanced("sin", {alt: "Sine"}),
-                textualAdvanced("cos", {alt: "Cosine"}),
-                textualAdvanced("tan", {alt: "Tangent"}),
-                iconAdvanced("maths-cube", {alt: "Cube"}),
+                textualAdvanced("log", {alt: "Logarithm (base 10)", insertText: "log("}),
+                textualAdvanced("ln", {alt: "Logarithm (base e)", insertText: "ln("}),
+                textualAdvanced("sin", {alt: "Sine", insertText: "sin("}),
+                textualAdvanced("cos", {alt: "Cosine", insertText: "cos("}),
+                textualAdvanced("tan", {alt: "Tangent", insertText: "tan("}),
+                iconAdvanced("maths-cube", {alt: "Cube", insertText: "^3"}),
                 iconAdvanced("maths-root", {alt: "Root"})
             ),
             AdvancedPadPage() (
                 textualAdvanced("INV"),
                 textualAdvanced("mod", {alt: "Modulo"}),
-                iconAdvanced("maths-reciprocal", {alt: "Reciprocal"}),
+                iconAdvanced("maths-reciprocal", {alt: "Reciprocal", insertText: "^-1"}),
                 textualAdvanced("log2", {alt: "Logarithm (base 2)"}),
-                textualAdvanced("logab", {alt: "Logarithm (base n)"}),
-                textualAdvanced("sinh", {alt: "Hyperbolic sine"}),
-                textualAdvanced("cosh", {alt: "Hyperbolic cosine"}),
-                textualAdvanced("tanh", {alt: "Hyperbolic tangent"}),
-                iconAdvanced("maths-abs", {alt: "Absolute value"}),
+                textualAdvanced("logab", {alt: "Logarithm (base n)", insertText: "logab"}),
+                textualAdvanced("sinh", {alt: "Hyperbolic sine", insertText: "sinh("}),
+                textualAdvanced("cosh", {alt: "Hyperbolic cosine", insertText: "cosh("}),
+                textualAdvanced("tanh", {alt: "Hyperbolic tangent", insertText: "tanh("}),
+                iconAdvanced("maths-abs", {alt: "Absolute value", insertText: "abs("}),
                 iconAdvanced("maths-factorial", {alt: "Factorial"})
             ),
             AdvancedPadPage() (
@@ -281,7 +283,7 @@ export var AdvancedPad = astronaut.component("AdvancedPad", function(props, chil
 });
 
 export var BasicPad = astronaut.component("BasicPad", function(props, children) {
-    var square = iconBasic("maths-square", {alt: "Square", landscapeRow: 2, landscapeColumn: 5});
+    var square = iconBasic("maths-square", {alt: "Square", insertText: "^2", landscapeRow: 2, landscapeColumn: 5});
     var power = iconBasic("maths-power", {alt: "Power", insertText: "^", landscapeRow: 1, landscapeColumn: 5});
     var squareRoot = iconBasic("maths-sqrt", {alt: "Square root", insertText: "sqrt", landscapeRow: 2, landscapeColumn: 4});
     var fraction = iconBasic("maths-frac", {alt: "Fraction", insertText: "over", increaseIconSize: true, landscapeRow: 1, landscapeColumn: 4});

@@ -118,6 +118,14 @@ $g.waitForLoad().then(function() {
     $g.theme.setProperty("secondaryUIText", "rgb(0, 0, 0)");
     $g.theme.setProperty("dark-primaryUIText", "rgb(255, 255, 255)");
     $g.theme.setProperty("dark-secondaryUIText", "rgb(255, 255, 255)");
+
+    editor.on("keydown", function(event) {
+        if (event.key == "Enter") {
+            event.preventDefault();
+
+            evaluate();
+        }
+    });
     
     astronaut.render(Screen(true) (
         Header({styleSets: [HEADER_STYLES]}) (
