@@ -283,6 +283,8 @@ export var AdvancedPad = astronaut.component("AdvancedPad", function(props, chil
 });
 
 export var BasicPad = astronaut.component("BasicPad", function(props, children) {
+    var clearAll = textualBasic("AC", {alt: "Clear all input"});
+    var brackets = textualBasic("( )");
     var square = iconBasic("maths-square", {alt: "Square", insertText: "^2", landscapeRow: 2, landscapeColumn: 5});
     var power = iconBasic("maths-power", {alt: "Power", insertText: "^", landscapeRow: 1, landscapeColumn: 5});
     var squareRoot = iconBasic("maths-sqrt", {alt: "Square root", insertText: "sqrt", landscapeRow: 2, landscapeColumn: 4});
@@ -292,6 +294,57 @@ export var BasicPad = astronaut.component("BasicPad", function(props, children) 
     var evaluate = PadButton({type: "highlight", alt: "Evaluate"}) ("=");
 
     var lastFocusedEditorArea = null;
+
+    clearAll.on("click", function(event) {
+        calculator.editor.inter.clear();
+
+        event.preventDefault();
+
+        lastFocusedEditorArea?.focus();
+    });
+
+    brackets.on("click", function(event) {
+        var selection = document.getSelection();
+
+        if (selection.rangeCount > 0) {
+            var range = selection.getRangeAt(0).cloneRange();
+            var rangeStartElement = range.startContainer;
+
+            if (rangeStartElement.nodeType == Node.TEXT_NODE) {
+                rangeStartElement = rangeStartElement.parentElement;
+            }
+
+            if (!rangeStartElement.matches(".formulaic_atomSlot")) {
+                rangeStartElement = rangeStartElement.closest(".formulaic_atomSlot");
+            }
+    
+            range.collapse(true);
+            range.setStart(rangeStartElement || calculator.editor.get(), 0);
+    
+            var previousText = range.toString().trim();
+            var bracketDepth = 0;
+
+            for (var i = 0; i < previousText.length; i++) {
+                if (previousText[i] == "(") {
+                    bracketDepth++;
+                }
+
+                if (previousText[i] == ")") {
+                    bracketDepth--;
+                }
+
+                if (bracketDepth < 0) {
+                    bracketDepth = 0;
+                }
+            }
+
+            calculator.editor.inter.insertText(bracketDepth == 0 || previousText.slice(-1) == "(" ? "(" : ")");
+        }
+
+        event.preventDefault();
+
+        lastFocusedEditorArea?.focus();
+    });
 
     backspace.on("click", function(event) {
         calculator.editor.inter.deleteTowardsStart();
@@ -314,7 +367,7 @@ export var BasicPad = astronaut.component("BasicPad", function(props, children) 
     return Section({
         styleSets: [BASIC_PAD_STYLES]
     }) (
-        textualBasic("AC", {alt: "Clear all input"}), textualBasic("( )"), textualBasic(",", {insertText: ","}), square, power,
+        clearAll, brackets, textualBasic(",", {insertText: ","}), square, power,
         numericBasic(7), numericBasic(8), numericBasic(9), squareRoot, fraction,
         numericBasic(4), numericBasic(5), numericBasic(6), textualBasic("×", {alt: "Multiply", insertText: "×"}), textualBasic("÷", {alt: "Divide", insertText: "÷"}),
         numericBasic(1), numericBasic(2), numericBasic(3), textualBasic("+", {alt: "Add", insertText: "+"}), textualBasic("−", {alt: "Subtract", insertText: "-"}),
