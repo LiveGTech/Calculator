@@ -129,8 +129,7 @@ $g.waitForLoad().then(function() {
     
     astronaut.render(Screen(true) (
         Header({styleSets: [HEADER_STYLES]}) (
-            Text("Calculator"),
-            HeaderActionButton() (Icon({icon: "star"}) ())
+            Text("Calculator")
         ),
         Page({
             showing: true,

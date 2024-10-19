@@ -165,7 +165,7 @@ export var PadButton = astronaut.component("PadButton", function(props, children
     var button = (props.icon ? IconButton : Button)({
         ...props,
         mode: props.type != "highlight" ? "secondary" : "primary",
-        iconType: "dark embedded",
+        iconType: props.iconType || "dark embedded",
         styleSets: [
             PAD_BUTTON_STYLES,
             ...(props.type == "basic" ? [PAD_BUTTON_TYPE_BASIC_STYLES] : []),
@@ -204,7 +204,7 @@ function iconBasic(icon, props) {
 }
 
 function iconAdvanced(icon, props) {
-    return PadButton({...props, icon, type: "advanced"}) ();
+    return PadButton({...props, icon, type: "advanced", iconType: "dark"}) ();
 }
 
 export var AdvancedPadPage = astronaut.component("AdvancedPadPage", function(props, children) {
@@ -314,10 +314,10 @@ export var BasicPad = astronaut.component("BasicPad", function(props, children) 
     return Section({
         styleSets: [BASIC_PAD_STYLES]
     }) (
-        textualBasic("AC", {alt: "Clear all input"}), textualBasic("( )"), textualBasic(","), square, power,
+        textualBasic("AC", {alt: "Clear all input"}), textualBasic("( )"), textualBasic(",", {insertText: ","}), square, power,
         numericBasic(7), numericBasic(8), numericBasic(9), squareRoot, fraction,
         numericBasic(4), numericBasic(5), numericBasic(6), textualBasic("×", {alt: "Multiply", insertText: "×"}), textualBasic("÷", {alt: "Divide", insertText: "÷"}),
         numericBasic(1), numericBasic(2), numericBasic(3), textualBasic("+", {alt: "Add", insertText: "+"}), textualBasic("−", {alt: "Subtract", insertText: "-"}),
         numericBasic(0), textualBasic(".", {insertText: "."}), iconBasic("maths-exp", {alt: "Exponent", increaseIconSize: true}), backspace, evaluate
     );
-})
+});
