@@ -17,6 +17,8 @@ window.FORMULAIC_AUI_URL_PREFIX = common.AUI_URL_PREFIX;
 var maths = await import("./lib/formulaic/src/maths.js");
 var richMaths = await import("./lib/formulaic/richeditor/richmaths.js");
 
+export var currentLocale = null;
+
 window.$g = $g;
 
 astronaut.unpack();
@@ -103,8 +105,7 @@ $g.waitForLoad().then(function() {
     );
 
     return $g.l10n.selectLocaleFromResources({
-        "en_GB": "locales/en_GB.json",
-        "fr_FR": "locales/fr_FR.json"
+        "en_GB": "locales/en_GB.json"
     });
 }).then(function(locale) {
     currentLocale = locale;
