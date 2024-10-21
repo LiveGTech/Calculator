@@ -1,0 +1,53 @@
+{
+    "localeCode": "en_GB",
+    "metadata": {
+        "name": "English (United Kingdom)",
+        "nameShort": "English",
+        "textDirection": "ltr"
+    },
+    "source": {
+        "calculator": "Calculator",
+
+        "backspace": "Backspace",
+        "evaluate": "Evaluate",
+
+        "square": "Square",
+        "power": "Power",
+        "sqrt": "Square root",
+        "frac": "Fraction",
+        "exp": "Exponent",
+        "multiply": "Multiply",
+        "divide": "Divide",
+        "add": "Add",
+        "subtract": "Subtract",
+
+        "log": "Logarithm (base 10)",
+        "ln": "Logarithm (base e)",
+        "sin": "Sine",
+        "cos": "Cosine",
+        "tan": "Tangent",
+        "cube": "Cube",
+        "root": "Root",
+        "mod": "Modulo",
+        "reciprocal": "Reciprocal",
+        "log2": "Logarithm (base 2)",
+        "logab": "Logarithm (base n)",
+        "sinh": "Hyperbolic sine",
+        "cosh": "Hyperbolic cosine",
+        "tanh": "Hyperbolic tangent",
+        "abs": "Absolute value",
+        "factorial": "Factorial",
+        "set": "Assign value to variable",
+        "evaluateX": "Evaluate in terms of x",
+        "swap": "Swap x and y values",
+        "derivative": "Derivative",
+        "integral": "Integral",
+        "secondDerivative": "Second derivative",
+        "doubleIntegral": "Double integral",
+        "changeBase": "Change numeric base",
+        "changeBitWidth": "Change bit width",
+        "ascii": "Enter ASCII character",
+        "bitShiftLeft": "Bit shift left",
+        "bitShiftRight": "Bit shift right (arithmetic)"
+    }
+}

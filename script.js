@@ -102,6 +102,23 @@ $g.waitForLoad().then(function() {
         })
     );
 
+    return $g.l10n.selectLocaleFromResources({
+        "en_GB": "locales/en_GB.json",
+        "fr_FR": "locales/fr_FR.json"
+    });
+}).then(function(locale) {
+    currentLocale = locale;
+
+    window._ = function() {
+        return locale.translate(...arguments);
+    };
+
+    window._format = function() {
+        return locale.format(...arguments);
+    };
+
+    $g.sel("title").setText(_("calculator"));
+
     $g.theme.setProperty("primaryHue", "165");
     $g.theme.setProperty("primarySaturation", "70%");
     $g.theme.setProperty("primaryLightness", "50%");
@@ -129,7 +146,7 @@ $g.waitForLoad().then(function() {
     
     astronaut.render(Screen(true) (
         Header({styleSets: [HEADER_STYLES]}) (
-            Text("Calculator")
+            Text(_("calculator"))
         ),
         Page({
             showing: true,

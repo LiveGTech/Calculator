@@ -231,46 +231,46 @@ export var AdvancedPad = astronaut.component("AdvancedPad", function(props, chil
                 textualAdvanced("INV"),
                 textualAdvanced("DRG"),
                 iconAdvanced("maths-pi", {alt: "Pi"}),
-                textualAdvanced("log", {alt: "Logarithm (base 10)", insertText: "log("}),
-                textualAdvanced("ln", {alt: "Logarithm (base e)", insertText: "ln("}),
-                textualAdvanced("sin", {alt: "Sine", insertText: "sin("}),
-                textualAdvanced("cos", {alt: "Cosine", insertText: "cos("}),
-                textualAdvanced("tan", {alt: "Tangent", insertText: "tan("}),
-                iconAdvanced("maths-cube", {alt: "Cube", insertText: "^3"}),
-                iconAdvanced("maths-root", {alt: "Root"})
+                textualAdvanced("log", {alt: _("log"), insertText: "log("}),
+                textualAdvanced("ln", {alt: _("ln"), insertText: "ln("}),
+                textualAdvanced("sin", {alt: _("sin"), insertText: "sin("}),
+                textualAdvanced("cos", {alt: _("cos"), insertText: "cos("}),
+                textualAdvanced("tan", {alt: _("tan"), insertText: "tan("}),
+                iconAdvanced("maths-cube", {alt: _("cube"), insertText: "^3"}),
+                iconAdvanced("maths-root", {alt: "root"})
             ),
             AdvancedPadPage() (
                 textualAdvanced("INV"),
-                textualAdvanced("mod", {alt: "Modulo"}),
-                iconAdvanced("maths-reciprocal", {alt: "Reciprocal", insertText: "^-1"}),
-                textualAdvanced("log2", {alt: "Logarithm (base 2)"}),
-                textualAdvanced("logab", {alt: "Logarithm (base n)", insertText: "logab"}),
-                textualAdvanced("sinh", {alt: "Hyperbolic sine", insertText: "sinh("}),
-                textualAdvanced("cosh", {alt: "Hyperbolic cosine", insertText: "cosh("}),
-                textualAdvanced("tanh", {alt: "Hyperbolic tangent", insertText: "tanh("}),
-                iconAdvanced("maths-abs", {alt: "Absolute value", insertText: "abs"}),
-                iconAdvanced("maths-factorial", {alt: "Factorial"})
+                textualAdvanced("mod", {alt: _("mod")}),
+                iconAdvanced("maths-reciprocal", {alt: _("reciprocal"), insertText: "^-1"}),
+                textualAdvanced("log2", {alt: _("log2")}),
+                textualAdvanced("logab", {alt: _("logab"), insertText: "logab"}),
+                textualAdvanced("sinh", {alt: _("sinh"), insertText: "sinh("}),
+                textualAdvanced("cosh", {alt: _("cosh"), insertText: "cosh("}),
+                textualAdvanced("tanh", {alt: _("tanh"), insertText: "tanh("}),
+                iconAdvanced("maths-abs", {alt: _("abs"), insertText: "abs"}),
+                iconAdvanced("maths-factorial", {alt: _("factorial")})
             ),
             AdvancedPadPage() (
-                textualAdvanced("SET", {alt: "Assign value to variable"}),
-                textualAdvanced("x?", {alt: "Evaluate in terms of x"}),
-                textualAdvanced("x<>y", {alt: "Swap x and y values"}),
-                textualAdvanced("d/dx", {alt: "Derivative"}),
-                textualAdvanced("itg", {alt: "Integral"}),
+                textualAdvanced("SET", {alt: _("set")}),
+                textualAdvanced("x?", {alt: _("evaluateX")}),
+                textualAdvanced("x<>y", {alt: _("swap")}),
+                textualAdvanced("d/dx", {alt: _("derivative")}),
+                textualAdvanced("itg", {alt: _("integral")}),
                 iconAdvanced("maths-x", {alt: "x", noTitle: true}),
                 iconAdvanced("maths-y", {alt: "y", noTitle: true}),
                 iconAdvanced("maths-i", {alt: "i", noTitle: true}),
-                textualAdvanced("d/dx2", {alt: "Second derivative"}),
-                textualAdvanced("itg2", {alt: "Double integral"})
+                textualAdvanced("d/dx2", {alt: _("secondDerivative")}),
+                textualAdvanced("itg2", {alt: _("doubleIntegral")})
             ),
             AdvancedPadPage() (
-                textualAdvanced("BASE", {alt: "Change numeric base"}),
-                textualAdvanced("BITS", {alt: "Change bit width"}),
-                textualAdvanced("x<>y", {alt: "Enter ASCII character"}),
+                textualAdvanced("BASE", {alt: _("changeBase")}),
+                textualAdvanced("BITS", {alt: _("changeBitWidth")}),
+                textualAdvanced("x<>y", {alt: _("ascii")}),
                 textualAdvanced("and"),
                 textualAdvanced("or"),
-                textualAdvanced("<<", {alt: "Bit shift left"}),
-                textualAdvanced(">>", {alt: "Bit shift right (arithmetic)"}),
+                textualAdvanced("<<", {alt: _("bitShiftLeft")}),
+                textualAdvanced(">>", {alt: _("bitShiftRight")}),
                 textualAdvanced("not"),
                 textualAdvanced("nand"),
                 textualAdvanced("xor")
@@ -285,14 +285,14 @@ export var AdvancedPad = astronaut.component("AdvancedPad", function(props, chil
 export var BasicPad = astronaut.component("BasicPad", function(props, children) {
     var clearAll = textualBasic("AC", {alt: "Clear all input"});
     var brackets = textualBasic("( )");
-    var square = iconBasic("maths-square", {alt: "Square", insertText: "^2", landscapeRow: 2, landscapeColumn: 5});
-    var power = iconBasic("maths-power", {alt: "Power", insertText: "^", landscapeRow: 1, landscapeColumn: 5});
-    var squareRoot = iconBasic("maths-sqrt", {alt: "Square root", insertText: "sqrt", landscapeRow: 2, landscapeColumn: 4});
-    var fraction = iconBasic("maths-frac", {alt: "Fraction", insertText: "over", increaseIconSize: true, landscapeRow: 1, landscapeColumn: 4});
-    var exponent = iconBasic("maths-exp", {alt: "Exponent", increaseIconSize: true});
+    var square = iconBasic("maths-square", {alt: _("square"), insertText: "^2", landscapeRow: 2, landscapeColumn: 5});
+    var power = iconBasic("maths-power", {alt: _("power"), insertText: "^", landscapeRow: 1, landscapeColumn: 5});
+    var squareRoot = iconBasic("maths-sqrt", {alt: _("sqrt"), insertText: "sqrt", landscapeRow: 2, landscapeColumn: 4});
+    var fraction = iconBasic("maths-frac", {alt: _("frac"), insertText: "over", increaseIconSize: true, landscapeRow: 1, landscapeColumn: 4});
+    var exponent = iconBasic("maths-exp", {alt: _("exp"), increaseIconSize: true});
 
-    var backspace = iconBasic("backspace", {alt: "Backspace"});
-    var evaluate = PadButton({type: "highlight", alt: "Evaluate"}) ("=");
+    var backspace = iconBasic("backspace", {alt: _("backspace")});
+    var evaluate = PadButton({type: "highlight", alt: _("evaluate")}) ("=");
 
     var lastFocusedEditorArea = null;
 
@@ -371,15 +371,15 @@ export var BasicPad = astronaut.component("BasicPad", function(props, children) 
         if (calculator.editor.get().contains(document.activeElement)) {
             lastFocusedEditorArea = $g.sel(document.activeElement);
         }
-    })
+    });
 
     return Section({
         styleSets: [BASIC_PAD_STYLES]
     }) (
         clearAll, brackets, textualBasic(",", {insertText: ","}), square, power,
         numericBasic(7), numericBasic(8), numericBasic(9), squareRoot, fraction,
-        numericBasic(4), numericBasic(5), numericBasic(6), textualBasic("×", {alt: "Multiply", insertText: "×"}), textualBasic("÷", {alt: "Divide", insertText: "÷"}),
-        numericBasic(1), numericBasic(2), numericBasic(3), textualBasic("+", {alt: "Add", insertText: "+"}), textualBasic("−", {alt: "Subtract", insertText: "-"}),
+        numericBasic(4), numericBasic(5), numericBasic(6), textualBasic("×", {alt: _("multiply"), insertText: "×"}), textualBasic("÷", {alt: _("divide"), insertText: "÷"}),
+        numericBasic(1), numericBasic(2), numericBasic(3), textualBasic("+", {alt: _("add"), insertText: "+"}), textualBasic("−", {alt: _("subtract"), insertText: "-"}),
         numericBasic(0), textualBasic(".", {insertText: "."}), exponent, backspace, evaluate
     );
 });
