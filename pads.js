@@ -373,13 +373,16 @@ export var BasicPad = astronaut.component("BasicPad", function(props, children) 
         }
     });
 
+    var separator = calculator.decimalPointIsComma ? ";" : ",";
+    var decimalPoint = calculator.decimalPointIsComma ? "," : ".";
+
     return Section({
         styleSets: [BASIC_PAD_STYLES]
     }) (
-        clearAll, brackets, textualBasic(",", {insertText: ","}), square, power,
+        clearAll, brackets, textualBasic(separator, {insertText: separator}), square, power,
         numericBasic(7), numericBasic(8), numericBasic(9), squareRoot, fraction,
         numericBasic(4), numericBasic(5), numericBasic(6), textualBasic("×", {alt: _("multiply"), insertText: "×"}), textualBasic("÷", {alt: _("divide"), insertText: "÷"}),
         numericBasic(1), numericBasic(2), numericBasic(3), textualBasic("+", {alt: _("add"), insertText: "+"}), textualBasic("−", {alt: _("subtract"), insertText: "-"}),
-        numericBasic(0), textualBasic(".", {insertText: "."}), exponent, backspace, evaluate
+        numericBasic(0), textualBasic(decimalPoint, {insertText: decimalPoint}), exponent, backspace, evaluate
     );
 });

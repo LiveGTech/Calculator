@@ -18,6 +18,7 @@ var maths = await import("./lib/formulaic/src/maths.js");
 var richMaths = await import("./lib/formulaic/richeditor/richmaths.js");
 
 export var currentLocale = null;
+export var decimalPointIsComma = false;
 
 window.$g = $g;
 
@@ -88,9 +89,18 @@ export var editor = richMaths.format.createRichEditor({
 });
 
 export function evaluate() {
-    var expression = maths.engine.Expression.parse(editor.inter.getExpression());
+    maths.engine.decimalPointIsComma = decimalPointIsComma;
+    maths.engine.separator = decimalPointIsComma ? ";" : ",";
+
+    var expression = maths.engine.Expression.parse(editor.inter.getExpression({separator: maths.engine.separator}));
 
     expression.evaluate().then(function(result) {
+        result = result.toString();
+
+        if (decimalPointIsComma) {
+            result = result.replace(/\./g, ",");
+        }
+
         editor.inter.getEditorArea().setText(result);
     });
 }
@@ -119,6 +129,10 @@ $g.waitForLoad().then(function() {
     };
 
     $g.sel("title").setText(_("calculator"));
+
+    if (Number(0.1).toLocaleString($g.l10n.getSystemLocaleCode().replace(/_/g, "-")) == "0,1") {
+        decimalPointIsComma = true;
+    }
 
     $g.theme.setProperty("primaryHue", "165");
     $g.theme.setProperty("primarySaturation", "70%");
