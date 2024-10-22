@@ -257,9 +257,9 @@ export var AdvancedPad = astronaut.component("AdvancedPad", function(props, chil
                 textualAdvanced("x<>y", {alt: _("swap")}),
                 textualAdvanced("d/dx", {alt: _("derivative")}),
                 textualAdvanced("itg", {alt: _("integral")}),
-                iconAdvanced("maths-x", {alt: "x", noTitle: true}),
-                iconAdvanced("maths-y", {alt: "y", noTitle: true}),
-                iconAdvanced("maths-i", {alt: "i", noTitle: true}),
+                iconAdvanced("maths-x", {alt: "x", insertText: "x", noTitle: true}),
+                iconAdvanced("maths-y", {alt: "y", insertText: "y", noTitle: true}),
+                iconAdvanced("maths-i", {alt: "i", insertText: "i", noTitle: true}),
                 textualAdvanced("d/dx2", {alt: _("secondDerivative")}),
                 textualAdvanced("itg2", {alt: _("doubleIntegral")})
             ),

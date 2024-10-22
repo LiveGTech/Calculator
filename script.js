@@ -88,6 +88,11 @@ export var editor = richMaths.format.createRichEditor({
     }
 });
 
+maths.engine.variables = {
+    x: new maths.ComplexNumberType(0),
+    y: new maths.ComplexNumberType(0)
+};
+
 export function evaluate() {
     maths.engine.decimalPointIsComma = decimalPointIsComma;
     maths.engine.separator = decimalPointIsComma ? ";" : ",";
