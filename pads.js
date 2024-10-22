@@ -237,7 +237,7 @@ export var AdvancedPad = astronaut.component("AdvancedPad", function(props, chil
             AdvancedPadPage() (
                 textualAdvanced("INV"),
                 textualAdvanced("DRG"),
-                iconAdvanced("maths-pi", {alt: "Pi"}),
+                iconAdvanced("maths-pi", {alt: _("pi"), insertText: "π"}),
                 textualAdvanced("log", {alt: _("log"), insertText: "log("}),
                 textualAdvanced("ln", {alt: _("ln"), insertText: "ln("}),
                 textualAdvanced("sin", {alt: _("sin"), insertText: "sin("}),

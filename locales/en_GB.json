@@ -21,6 +21,7 @@
         "add": "Add",
         "subtract": "Subtract",
 
+        "pi": "Pi",
         "log": "Logarithm (base 10)",
         "ln": "Logarithm (base e)",
         "sin": "Sine",
