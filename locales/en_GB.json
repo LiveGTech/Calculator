@@ -48,6 +48,16 @@
         "changeBitWidth": "Change bit width",
         "ascii": "Enter ASCII character",
         "bitShiftLeft": "Bit shift left",
-        "bitShiftRight": "Bit shift right (arithmetic)"
+        "bitShiftRight": "Bit shift right (arithmetic)",
+        "getMemory": "Get memory value",
+        "incrementMemory": "Increment memory value with current result",
+        "decrementMemory": "Decrement memory value with current result",
+        "setMemory": "Set memory value to current result",
+        "resetMemory": "Reset memory value",
+        "randomFraction": "Generate random fraction",
+        "randomInteger": "Generate random integer",
+        "mean": "Find mean",
+        "npr": "Find number of permutations",
+        "ncr": "Find number of combinations"
     }
 }

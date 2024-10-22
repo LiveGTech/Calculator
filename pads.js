@@ -129,6 +129,12 @@ const PAD_BUTTON_SHRINK_TEXT_STYLES = new astronaut.StyleGroup([
     })
 ]);
 
+const PAD_BUTTON_FUNCTION_NAME_STYLES = new astronaut.StyleGroup([
+    new astronaut.StyleSet({
+        "font-size": "1rem"
+    })
+]);
+
 const PAD_BUTTON_INCREASE_ICON_SIZE_STYLES = new astronaut.StyleGroup([
     new astronaut.StyleSet({
         "width": "66%",
@@ -170,7 +176,8 @@ export var PadButton = astronaut.component("PadButton", function(props, children
             PAD_BUTTON_STYLES,
             ...(props.type == "basic" ? [PAD_BUTTON_TYPE_BASIC_STYLES] : []),
             ...(props.type == "advanced" ? [PAD_BUTTON_TYPE_ADVANCED_STYLES] : []),
-            ...(props.shrinkText || props.type == "advanced" ? [PAD_BUTTON_SHRINK_TEXT_STYLES] : []),
+            ...(props.type == "advanced" ? [PAD_BUTTON_SHRINK_TEXT_STYLES] : []),
+            ...(props.functionName ? [PAD_BUTTON_FUNCTION_NAME_STYLES] : []),
             ...(props.increaseIconSize ? [PAD_BUTTON_INCREASE_ICON_SIZE_STYLES] : []),
             ...specificStyles
         ]
@@ -241,7 +248,7 @@ export var AdvancedPad = astronaut.component("AdvancedPad", function(props, chil
             ),
             AdvancedPadPage() (
                 textualAdvanced("INV"),
-                textualAdvanced("mod", {alt: _("mod")}),
+                textualAdvanced("e", {alt: "e", insertText: "e", noTitle: true}),
                 iconAdvanced("maths-reciprocal", {alt: _("reciprocal"), insertText: "^-1"}),
                 textualAdvanced("log2", {alt: _("log2")}),
                 textualAdvanced("logab", {alt: _("logab"), insertText: "logab"}),
@@ -252,7 +259,7 @@ export var AdvancedPad = astronaut.component("AdvancedPad", function(props, chil
                 iconAdvanced("maths-factorial", {alt: _("factorial")})
             ),
             AdvancedPadPage() (
-                textualAdvanced("SET", {alt: _("set")}),
+                textualAdvanced("SET", {alt: _("set"), insertText: "="}),
                 textualAdvanced("x?", {alt: _("evaluateX")}),
                 textualAdvanced("x<>y", {alt: _("swap")}),
                 textualAdvanced("d/dx", {alt: _("derivative")}),
@@ -266,7 +273,7 @@ export var AdvancedPad = astronaut.component("AdvancedPad", function(props, chil
             AdvancedPadPage() (
                 textualAdvanced("BASE", {alt: _("changeBase")}),
                 textualAdvanced("BITS", {alt: _("changeBitWidth")}),
-                textualAdvanced("x<>y", {alt: _("ascii")}),
+                textualAdvanced("mod", {alt: _("mod")}),
                 textualAdvanced("and"),
                 textualAdvanced("or"),
                 textualAdvanced("<<", {alt: _("bitShiftLeft")}),
@@ -276,7 +283,16 @@ export var AdvancedPad = astronaut.component("AdvancedPad", function(props, chil
                 textualAdvanced("xor")
             ),
             AdvancedPadPage() (
-                ...astronaut.repeat(10, textualAdvanced("sin"))
+                textualAdvanced("M", {alt: _("getMemory")}),
+                textualAdvanced("M+", {alt: _("incrementMemory")}),
+                textualAdvanced("M-", {alt: _("decrementMemory")}),
+                textualAdvanced("MS", {alt: _("setMemory")}),
+                textualAdvanced("MR", {alt: _("resetMemory")}),
+                textualAdvanced("rand#", {alt: _("randomFraction"), functionName: true}),
+                textualAdvanced("randint", {alt: _("randomInteger"), functionName: true}),
+                textualAdvanced("mean", {alt: _("mean"), functionName: true}),
+                textualAdvanced("nPr", {alt: _("npr")}),
+                textualAdvanced("nCr", {alt: _("ncr")})
             )
         )
     );
