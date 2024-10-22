@@ -250,7 +250,7 @@ export var AdvancedPad = astronaut.component("AdvancedPad", function(props, chil
                 textualAdvanced("INV"),
                 textualAdvanced("e", {alt: "e", insertText: "e", noTitle: true}),
                 iconAdvanced("maths-reciprocal", {alt: _("reciprocal"), insertText: "^-1"}),
-                textualAdvanced("log2", {alt: _("log2")}),
+                textualAdvanced("log2", {alt: _("log2"), insertText: "log2"}),
                 textualAdvanced("logab", {alt: _("logab"), insertText: "logab"}),
                 textualAdvanced("sinh", {alt: _("sinh"), insertText: "sinh("}),
                 textualAdvanced("cosh", {alt: _("cosh"), insertText: "cosh("}),
