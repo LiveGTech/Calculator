@@ -244,7 +244,7 @@ export var AdvancedPad = astronaut.component("AdvancedPad", function(props, chil
                 textualAdvanced("cos", {alt: _("cos"), insertText: "cos("}),
                 textualAdvanced("tan", {alt: _("tan"), insertText: "tan("}),
                 iconAdvanced("maths-cube", {alt: _("cube"), insertText: "^3"}),
-                iconAdvanced("maths-root", {alt: "root"})
+                iconAdvanced("maths-root", {alt: "root", insertText: "root"})
             ),
             AdvancedPadPage() (
                 textualAdvanced("INV"),
@@ -256,7 +256,7 @@ export var AdvancedPad = astronaut.component("AdvancedPad", function(props, chil
                 textualAdvanced("cosh", {alt: _("cosh"), insertText: "cosh("}),
                 textualAdvanced("tanh", {alt: _("tanh"), insertText: "tanh("}),
                 iconAdvanced("maths-abs", {alt: _("abs"), insertText: "abs"}),
-                iconAdvanced("maths-factorial", {alt: _("factorial")})
+                iconAdvanced("maths-factorial", {alt: _("factorial"), insertText: "!"})
             ),
             AdvancedPadPage() (
                 textualAdvanced("SET", {alt: _("set"), insertText: "="}),
