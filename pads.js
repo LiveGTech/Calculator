@@ -135,13 +135,6 @@ const PAD_BUTTON_FUNCTION_NAME_STYLES = new astronaut.StyleGroup([
     })
 ]);
 
-const PAD_BUTTON_INCREASE_ICON_SIZE_STYLES = new astronaut.StyleGroup([
-    new astronaut.StyleSet({
-        "width": "66%",
-        "transform": "scale(1.5)"
-    }, "*", "img")
-]);
-
 export var PadButton = astronaut.component("PadButton", function(props, children) {
     props.type ||= "basic";
 
@@ -178,7 +171,18 @@ export var PadButton = astronaut.component("PadButton", function(props, children
             ...(props.type == "advanced" ? [PAD_BUTTON_TYPE_ADVANCED_STYLES] : []),
             ...(props.type == "advanced" ? [PAD_BUTTON_SHRINK_TEXT_STYLES] : []),
             ...(props.functionName ? [PAD_BUTTON_FUNCTION_NAME_STYLES] : []),
-            ...(props.increaseIconSize ? [PAD_BUTTON_INCREASE_ICON_SIZE_STYLES] : []),
+            ...(props.iconScale ? [new astronaut.StyleGroup([
+                new astronaut.StyleSet({
+                    "width": "66%",
+                    "transform": `scale(${props.iconScale})`
+                }, "*", "img")
+            ])] : []),
+            ...(props.mobileIconScale ? [new astronaut.StyleGroup([
+                new astronaut.MediaQueryStyleSet(["(max-width: 400px), (min-aspect-ratio: 1 / 1) and (max-width: 600px)"], {
+                    "width": "66%",
+                    "transform": `scale(${props.mobileIconScale})`
+                }, "*", "img")
+            ])] : []),
             ...specificStyles
         ]
     }) (...children);
@@ -250,8 +254,8 @@ export var AdvancedPad = astronaut.component("AdvancedPad", function(props, chil
                 textualAdvanced("INV"),
                 textualAdvanced("e", {alt: "e", insertText: "e", noTitle: true}),
                 iconAdvanced("maths-reciprocal", {alt: _("reciprocal"), insertText: "^-1"}),
-                textualAdvanced("log2", {alt: _("log2"), insertText: "log2"}),
-                textualAdvanced("logab", {alt: _("logab"), insertText: "logab"}),
+                iconAdvanced("maths-log2", {alt: _("log2"), insertText: "log2", iconScale: 2, mobileIconScale: 1.5}),
+                iconAdvanced("maths-logab", {alt: _("logab"), insertText: "logab", iconScale: 2, mobileIconScale: 1.5}),
                 textualAdvanced("sinh", {alt: _("sinh"), insertText: "sinh("}),
                 textualAdvanced("cosh", {alt: _("cosh"), insertText: "cosh("}),
                 textualAdvanced("tanh", {alt: _("tanh"), insertText: "tanh("}),
@@ -260,15 +264,15 @@ export var AdvancedPad = astronaut.component("AdvancedPad", function(props, chil
             ),
             AdvancedPadPage() (
                 textualAdvanced("SET", {alt: _("set"), insertText: "="}),
-                textualAdvanced("x?", {alt: _("evaluateX")}),
-                textualAdvanced("x<>y", {alt: _("swap")}),
-                textualAdvanced("d/dx", {alt: _("derivative")}),
-                textualAdvanced("itg", {alt: _("integral")}),
+                iconAdvanced("maths-sum", {alt: _("evaluateX"), iconScale: 1.5}),
+                iconAdvanced("maths-product", {alt: _("doubleIntegral"), iconScale: 1.5}),
+                iconAdvanced("maths-derivative", {alt: _("derivative"), iconScale: 1.5}),
+                iconAdvanced("maths-secondderivative", {alt: _("secondDerivative"), iconScale: 1.5}),
                 iconAdvanced("maths-x", {alt: "x", insertText: "x", noTitle: true}),
                 iconAdvanced("maths-y", {alt: "y", insertText: "y", noTitle: true}),
                 iconAdvanced("maths-i", {alt: "i", insertText: "i", noTitle: true}),
-                textualAdvanced("d/dx2", {alt: _("secondDerivative")}),
-                textualAdvanced("itg2", {alt: _("doubleIntegral")})
+                iconAdvanced("maths-integral", {alt: _("integral"), iconScale: 1.5}),
+                iconAdvanced("maths-swapxy", {alt: _("swap"), iconScale: 1.5})
             ),
             AdvancedPadPage() (
                 textualAdvanced("BASE", {alt: _("changeBase")}),
@@ -304,8 +308,8 @@ export var BasicPad = astronaut.component("BasicPad", function(props, children) 
     var square = iconBasic("maths-square", {alt: _("square"), insertText: "^2", landscapeRow: 2, landscapeColumn: 5});
     var power = iconBasic("maths-power", {alt: _("power"), insertText: "^", landscapeRow: 1, landscapeColumn: 5});
     var squareRoot = iconBasic("maths-sqrt", {alt: _("sqrt"), insertText: "sqrt", landscapeRow: 2, landscapeColumn: 4});
-    var fraction = iconBasic("maths-frac", {alt: _("frac"), insertText: "over", increaseIconSize: true, landscapeRow: 1, landscapeColumn: 4});
-    var exponent = iconBasic("maths-exp", {alt: _("exp"), increaseIconSize: true});
+    var fraction = iconBasic("maths-frac", {alt: _("frac"), insertText: "over", iconScale: 1.5, landscapeRow: 1, landscapeColumn: 4});
+    var exponent = iconBasic("maths-exp", {alt: _("exp"), iconScale: 1.5});
 
     var backspace = iconBasic("backspace", {alt: _("backspace")});
     var evaluate = PadButton({type: "highlight", alt: _("evaluate")}) ("=");
