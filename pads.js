@@ -264,8 +264,8 @@ export var AdvancedPad = astronaut.component("AdvancedPad", function(props, chil
             ),
             AdvancedPadPage() (
                 textualAdvanced("SET", {alt: _("set"), insertText: "="}),
-                iconAdvanced("maths-sum", {alt: _("evaluateX"), iconScale: 1.5}),
-                iconAdvanced("maths-product", {alt: _("doubleIntegral"), iconScale: 1.5}),
+                iconAdvanced("maths-sum", {alt: _("evaluateX"), insertText: "sum(x,", iconScale: 1.5}),
+                iconAdvanced("maths-product", {alt: _("doubleIntegral"), insertText: "product(x,", iconScale: 1.5}),
                 iconAdvanced("maths-derivative", {alt: _("derivative"), iconScale: 1.5}),
                 iconAdvanced("maths-secondderivative", {alt: _("secondDerivative"), iconScale: 1.5}),
                 iconAdvanced("maths-x", {alt: "x", insertText: "x", noTitle: true}),
