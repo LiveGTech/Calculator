@@ -81,16 +81,17 @@ const PAD_AREA_STYLES = new astronaut.StyleGroup([
 export var editor = richMaths.format.createRichEditor({
     inline: true,
     styles: {
-        display: "block"
+        "display": "block"
     },
     attributes: {
         "inputmode": "none"
-    }
+    },
+    defaultVariable: "x"
 });
 
 maths.engine.variables = {
-    x: new maths.ComplexNumberType(0),
-    y: new maths.ComplexNumberType(0)
+    x: new maths.ComplexNumberType(1),
+    y: new maths.ComplexNumberType(1)
 };
 
 export function evaluate() {
