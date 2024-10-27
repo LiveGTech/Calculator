@@ -248,12 +248,13 @@ export var AdvancedPad = astronaut.component("AdvancedPad", function(props, chil
                 textualAdvanced("cos", {alt: _("cos"), insertText: "cos("}),
                 textualAdvanced("tan", {alt: _("tan"), insertText: "tan("}),
                 iconAdvanced("maths-cube", {alt: _("cube"), insertText: "^3"}),
-                iconAdvanced("maths-root", {alt: "root", insertText: "root"})
+                iconAdvanced("maths-root", {alt: _("root"), insertText: "root"})
             ),
             AdvancedPadPage() (
                 textualAdvanced("INV"),
                 textualAdvanced("e", {alt: "e", insertText: "e", noTitle: true}),
                 iconAdvanced("maths-reciprocal", {alt: _("reciprocal"), insertText: "^-1"}),
+                // FIXME: `log2` icon should show slot as primary
                 iconAdvanced("maths-log2", {alt: _("log2"), insertText: "log2", iconScale: 2, mobileIconScale: 1.5}),
                 iconAdvanced("maths-logab", {alt: _("logab"), insertText: "logab", iconScale: 2, mobileIconScale: 1.5}),
                 textualAdvanced("sinh", {alt: _("sinh"), insertText: "sinh("}),
@@ -264,14 +265,14 @@ export var AdvancedPad = astronaut.component("AdvancedPad", function(props, chil
             ),
             AdvancedPadPage() (
                 textualAdvanced("SET", {alt: _("set"), insertText: "="}),
-                iconAdvanced("maths-sum", {alt: _("evaluateX"), insertText: "sum", iconScale: 1.5}),
-                iconAdvanced("maths-product", {alt: _("doubleIntegral"), insertText: "product", iconScale: 1.5}),
+                iconAdvanced("maths-sum", {alt: _("sum"), insertText: "sum", iconScale: 1.5}),
+                iconAdvanced("maths-product", {alt: _("product"), insertText: "product", iconScale: 1.5}),
                 iconAdvanced("maths-derivative", {alt: _("derivative"), insertText: "deriv", iconScale: 1.5}),
                 iconAdvanced("maths-secondderivative", {alt: _("secondDerivative"), insertText: "secderiv", iconScale: 1.5}),
                 iconAdvanced("maths-x", {alt: "x", insertText: "x", noTitle: true}),
                 iconAdvanced("maths-y", {alt: "y", insertText: "y", noTitle: true}),
                 iconAdvanced("maths-i", {alt: "i", insertText: "i", noTitle: true}),
-                iconAdvanced("maths-integral", {alt: _("integral"), iconScale: 1.5}),
+                iconAdvanced("maths-integral", {alt: _("integral"), insertText: "integ", iconScale: 1.5}),
                 iconAdvanced("maths-swapxy", {alt: _("swap"), iconScale: 1.5})
             ),
             AdvancedPadPage() (
