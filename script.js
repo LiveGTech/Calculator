@@ -193,4 +193,8 @@ $g.waitForLoad().then(function() {
             )
         )
     ));
+
+    setTimeout(function() {
+        editor.inter.getEditorArea().focus();
+    });
 });
