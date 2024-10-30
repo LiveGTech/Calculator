@@ -32,6 +32,12 @@ const ADVANCED_PAD_STYLES = new astronaut.StyleGroup([
         "flex-direction": "column",
         "height": "9rem"
     }),
+    new astronaut.StyleSet({
+        "display": "none"
+    }, ".inverseEnabled",  ".inverseOff"),
+    new astronaut.StyleSet({
+        "display": "none"
+    }, ":not(.inverseEnabled)", ".inverseOn"),
     new astronaut.MediaQueryStyleSet("min-aspect-ratio: 1 / 1", {
         "width": "25%",
         "min-width": "5rem",
@@ -53,16 +59,17 @@ const ADVANCED_PAD_STYLES = new astronaut.StyleGroup([
 const ADVANCED_PAD_GRID_STYLES = new astronaut.StyleGroup([
     new astronaut.StyleSet({
         "display": "grid",
-        "grid-template-columns": "repeat(5, 1fr)",
+        "grid-template-rows": "repeat(2, minmax(0, 1fr))",
+        "grid-template-columns": "repeat(5, minmax(0, 1fr))",
         "padding": "0.5rem",
         "gap": "0.5rem",
         "direction": "ltr"
     }),
     new astronaut.MediaQueryStyleSet("min-aspect-ratio: 1 / 1", {
         "direction": "rtl",
-        "grid-template-rows": "repeat(5, 1fr)",
+        "grid-template-rows": "repeat(5, minmax(0, 1fr))",
+        "grid-template-columns": "repeat(2, minmax(0, 1fr))",
         "grid-auto-flow": "column",
-        "grid-template-columns": "unset",
         "transform": "scaleY(-1)"
     }),
     new astronaut.MediaQueryStyleSet("min-aspect-ratio: 1 / 1", {
@@ -228,38 +235,80 @@ export var AdvancedPadPage = astronaut.component("AdvancedPadPage", function(pro
 });
 
 export var AdvancedPad = astronaut.component("AdvancedPad", function(props, children) {
-    return Container({
+    var pad = Container({
         styleSets: [ADVANCED_PAD_STYLES, ADVANCED_PAD_PAGINATION_STYLES]
-    }) (
+    }) ();
+
+    function inverse() {
+        var button = textualAdvanced("INV", {alt: _("inverse")});
+
+        button.on("click", function() {
+            pad.toggleClass("inverseEnabled");
+        });
+
+        return button;
+    }
+
+    function angleUnits() {
+        var button = textualAdvanced("DRG");
+
+        button.on("click", async function() {
+            var menu = await astronaut.addEphemeral(Menu (
+                ...["deg", "rad", "gon", "turn"].map(function(unit) {
+                    var menuButton = MenuButton() (_(`angle_${unit}`));
+
+                    menuButton.on("click", function() {
+                        calculator.setAngleUnits(unit);
+                    });
+
+                    return menuButton;
+                })
+            ));
+
+            menu.menuOpen();
+        });
+
+        setInterval(function() {
+            button.setText(calculator.angleUnits.toUpperCase());
+        });
+
+        return button;
+    }
+
+    pad.add(
         ScrollableScreenContainer({
             mode: "paginated",
             styles: {
                 flexGrow: "1"
             }
         }) (
-            // FIXME: Buttons should go from bottom to top
             AdvancedPadPage() (
-                textualAdvanced("INV"),
-                textualAdvanced("DRG"),
+                inverse(),
+                angleUnits(),
                 iconAdvanced("maths-pi", {alt: _("pi"), insertText: "π"}),
                 textualAdvanced("log", {alt: _("log"), insertText: "log("}),
                 textualAdvanced("ln", {alt: _("ln"), insertText: "ln("}),
-                textualAdvanced("sin", {alt: _("sin"), insertText: "sin("}),
-                textualAdvanced("cos", {alt: _("cos"), insertText: "cos("}),
-                textualAdvanced("tan", {alt: _("tan"), insertText: "tan("}),
+                textualAdvanced("sin", {alt: _("sin"), insertText: "sin(", classes: ["inverseOff"]}),
+                textualAdvanced("cos", {alt: _("cos"), insertText: "cos(", classes: ["inverseOff"]}),
+                textualAdvanced("tan", {alt: _("tan"), insertText: "tan(", classes: ["inverseOff"]}),
+                textualAdvanced("asin", {alt: _("asin"), insertText: "asin(", classes: ["inverseOn"]}),
+                textualAdvanced("acos", {alt: _("acos"), insertText: "acos(", classes: ["inverseOn"]}),
+                textualAdvanced("atan", {alt: _("atan"), insertText: "atan(", classes: ["inverseOn"]}),
                 iconAdvanced("maths-cube", {alt: _("cube"), insertText: "^3"}),
                 iconAdvanced("maths-root", {alt: _("root"), insertText: "root"})
             ),
             AdvancedPadPage() (
-                textualAdvanced("INV"),
+                inverse(),
                 textualAdvanced("e", {alt: "e", insertText: "e", noTitle: true}),
                 iconAdvanced("maths-reciprocal", {alt: _("reciprocal"), insertText: "^-1"}),
-                // FIXME: `log2` icon should show slot as primary
                 iconAdvanced("maths-log2", {alt: _("log2"), insertText: "log2", iconScale: 2, mobileIconScale: 1.5}),
                 iconAdvanced("maths-logab", {alt: _("logab"), insertText: "logab", iconScale: 2, mobileIconScale: 1.5}),
-                textualAdvanced("sinh", {alt: _("sinh"), insertText: "sinh("}),
-                textualAdvanced("cosh", {alt: _("cosh"), insertText: "cosh("}),
-                textualAdvanced("tanh", {alt: _("tanh"), insertText: "tanh("}),
+                textualAdvanced("sinh", {alt: _("sinh"), insertText: "sinh(", classes: ["inverseOff"]}),
+                textualAdvanced("cosh", {alt: _("cosh"), insertText: "cosh(", classes: ["inverseOff"]}),
+                textualAdvanced("tanh", {alt: _("tanh"), insertText: "tanh(", classes: ["inverseOff"]}),
+                textualAdvanced("asinh", {alt: _("asinh"), insertText: "asinh(", classes: ["inverseOn"]}),
+                textualAdvanced("acosh", {alt: _("acosh"), insertText: "acosh(", classes: ["inverseOn"]}),
+                textualAdvanced("atanh", {alt: _("atanh"), insertText: "atanh(", classes: ["inverseOn"]}),
                 iconAdvanced("maths-abs", {alt: _("abs"), insertText: "abs"}),
                 iconAdvanced("maths-factorial", {alt: _("factorial"), insertText: "!"})
             ),
@@ -301,6 +350,8 @@ export var AdvancedPad = astronaut.component("AdvancedPad", function(props, chil
             )
         )
     );
+
+    return pad;
 });
 
 export var BasicPad = astronaut.component("BasicPad", function(props, children) {

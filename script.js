@@ -19,6 +19,7 @@ var richMaths = await import("./lib/formulaic/richeditor/richmaths.js");
 
 export var currentLocale = null;
 export var decimalPointIsComma = false;
+export var angleUnits = "rad";
 
 window.$g = $g;
 
@@ -93,6 +94,17 @@ maths.engine.variables = {
     x: new maths.ComplexNumberType(1),
     y: new maths.ComplexNumberType(1)
 };
+
+export function setAngleUnits(units) {
+    angleUnits = units;
+
+    maths.engine.angleUnit = {
+        "deg": 360,
+        "rad": 2 * Math.PI,
+        "gon": 400,
+        "turn": 1
+    }[units];
+}
 
 export function evaluate() {
     maths.engine.decimalPointIsComma = decimalPointIsComma;
