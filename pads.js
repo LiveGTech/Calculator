@@ -327,14 +327,14 @@ export var AdvancedPad = astronaut.component("AdvancedPad", function(props, chil
             AdvancedPadPage() (
                 textualAdvanced("BASE", {alt: _("changeBase")}),
                 textualAdvanced("BITS", {alt: _("changeBitWidth")}),
-                textualAdvanced("mod", {alt: _("mod")}),
-                textualAdvanced("and"),
-                textualAdvanced("or"),
-                textualAdvanced("<<", {alt: _("bitShiftLeft")}),
-                textualAdvanced(">>", {alt: _("bitShiftRight")}),
-                textualAdvanced("not"),
-                textualAdvanced("nand"),
-                textualAdvanced("xor")
+                textualAdvanced("mod", {alt: _("mod"), insertText: "mod"}),
+                textualAdvanced("and", {insertText: "and"}),
+                textualAdvanced("or", {insertText: "or"}),
+                textualAdvanced("<<", {alt: _("bitShiftLeft"), insertText: "<<"}),
+                textualAdvanced(">>", {alt: _("bitShiftRight"), insertText: ">>"}),
+                textualAdvanced("not", {insertText: "not"}),
+                textualAdvanced("nand", {insertText: "nand"}),
+                textualAdvanced("xor", {insertText: "xor"})
             ),
             AdvancedPadPage() (
                 textualAdvanced("M", {alt: _("getMemory")}),
