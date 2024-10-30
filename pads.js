@@ -239,8 +239,6 @@ export var AdvancedPad = astronaut.component("AdvancedPad", function(props, chil
         styleSets: [ADVANCED_PAD_STYLES, ADVANCED_PAD_PAGINATION_STYLES]
     }) ();
 
-    var swapxy = iconAdvanced("maths-swapxy", {alt: _("swap"), iconScale: 1.5});
-
     function inverse() {
         var button = textualAdvanced("INV", {alt: _("inverse")});
 
@@ -277,9 +275,15 @@ export var AdvancedPad = astronaut.component("AdvancedPad", function(props, chil
         return button;
     }
 
-    swapxy.on("click", function() {
-        calculator.swapxy();
-    });
+    function swapxy() {
+        var button = iconAdvanced("maths-swapxy", {alt: _("swap"), iconScale: 1.5});
+
+        button.on("click", function() {
+            calculator.swapxy();
+        });
+
+        return button;
+    }
 
     pad.add(
         ScrollableScreenContainer({
@@ -328,7 +332,7 @@ export var AdvancedPad = astronaut.component("AdvancedPad", function(props, chil
                 iconAdvanced("maths-y", {alt: "y", insertText: "y", noTitle: true}),
                 iconAdvanced("maths-i", {alt: "i", insertText: "i", noTitle: true}),
                 iconAdvanced("maths-integral", {alt: _("integral"), insertText: "integ", iconScale: 1.5}),
-                swapxy
+                swapxy()
             ),
             AdvancedPadPage() (
                 textualAdvanced("BASE", {alt: _("changeBase")}),
