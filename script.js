@@ -106,6 +106,13 @@ export function setAngleUnits(units) {
     }[units];
 }
 
+export function swapxy() {
+    var temp = maths.engine.variables["x"];
+
+    maths.engine.variables["x"] = maths.engine.variables["y"];
+    maths.engine.variables["y"] = temp;
+}
+
 export function evaluate() {
     maths.engine.decimalPointIsComma = decimalPointIsComma;
     maths.engine.separator = decimalPointIsComma ? ";" : ",";
