@@ -352,9 +352,9 @@ export var AdvancedPad = astronaut.component("AdvancedPad", function(props, chil
                 textualAdvanced("M-", {alt: _("decrementMemory")}),
                 textualAdvanced("MS", {alt: _("setMemory")}),
                 textualAdvanced("MR", {alt: _("resetMemory")}),
-                textualAdvanced("rand#", {alt: _("randomFraction"), functionName: true}),
-                textualAdvanced("randint", {alt: _("randomInteger"), functionName: true}),
-                textualAdvanced("mean", {alt: _("mean"), functionName: true}),
+                textualAdvanced("rand#", {alt: _("randomFraction"), insertText: "rand#", functionName: true}),
+                textualAdvanced("randint", {alt: _("randomInteger"), insertText: "randint(", functionName: true}),
+                textualAdvanced("mean", {alt: _("mean"), insertText: "mean(", functionName: true}),
                 textualAdvanced("nPr", {alt: _("npr"), insertText: "npr"}),
                 textualAdvanced("nCr", {alt: _("ncr"), insertText: "ncr"})
             )
