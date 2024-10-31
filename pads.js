@@ -355,8 +355,8 @@ export var AdvancedPad = astronaut.component("AdvancedPad", function(props, chil
                 textualAdvanced("rand#", {alt: _("randomFraction"), functionName: true}),
                 textualAdvanced("randint", {alt: _("randomInteger"), functionName: true}),
                 textualAdvanced("mean", {alt: _("mean"), functionName: true}),
-                textualAdvanced("nPr", {alt: _("npr")}),
-                textualAdvanced("nCr", {alt: _("ncr")})
+                textualAdvanced("nPr", {alt: _("npr"), insertText: "npr"}),
+                textualAdvanced("nCr", {alt: _("ncr"), insertText: "ncr"})
             )
         )
     );
