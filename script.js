@@ -113,13 +113,31 @@ export function swapxy() {
     maths.engine.variables["y"] = temp;
 }
 
-export function evaluate() {
+export async function evaluate() {
     maths.engine.decimalPointIsComma = decimalPointIsComma;
     maths.engine.separator = decimalPointIsComma ? ";" : ",";
 
-    var expression = maths.engine.Expression.parse(editor.inter.getExpression({separator: maths.engine.separator}));
+    try {
+        var expression = maths.engine.Expression.parse(editor.inter.getExpression({separator: maths.engine.separator}));
 
-    expression.evaluate().then(function(result) {
+        var result = await expression.evaluate();
+
+        if (typeof(result) != maths.ComplexNumberType || result.real == NaN || result.imag == NaN) {
+            var errorDialog = await astronaut.addEphemeral(Dialog (
+                DialogContent (
+                    Heading() (_("evaluationError_title_nan")),
+                    Paragraph() (_("evaluationError_description")),
+                ),
+                ButtonRow({mode: "end"}) (
+                    Button({attributes: {"aui-bind": "close"}}) (("ok"))
+                )
+            ));
+
+            errorDialog.dialogOpen();
+
+            return;
+        }
+        
         result = result.toString();
 
         if (decimalPointIsComma) {
@@ -127,7 +145,21 @@ export function evaluate() {
         }
 
         editor.inter.getEditorArea().setText(result);
-    });
+    } catch (error) {
+        console.warn(error);
+
+        var errorDialog = await astronaut.addEphemeral(Dialog (
+            DialogContent (
+                Heading() (error instanceof SyntaxError ? _("evaluationError_title_syntax") : _("evaluationError_title_generic")),
+                Paragraph() (_("evaluationError_description")),
+            ),
+            ButtonRow({mode: "end"}) (
+                Button({attributes: {"aui-bind": "close"}}) (_("ok"))
+            )
+        ));
+
+        errorDialog.dialogOpen();
+    }
 }
 
 $g.waitForLoad().then(function() {

@@ -8,6 +8,8 @@
     "source": {
         "calculator": "Calculator",
 
+        "ok": "OK",
+
         "backspace": "Backspace",
         "evaluate": "Evaluate",
 
@@ -72,6 +74,11 @@
         "randomInteger": "Generate random integer",
         "mean": "Find mean",
         "npr": "Find number of permutations",
-        "ncr": "Find number of combinations"
+        "ncr": "Find number of combinations",
+
+        "evaluationError_title_generic": "Error while evaluating expression",
+        "evaluationError_title_syntax": "Syntax error",
+        "evaluationError_title_nan": "Result is not a number",
+        "evaluationError_description": "Check the expression you entered and try again."
     }
 }
