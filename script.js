@@ -97,8 +97,13 @@ export var editor = richMaths.format.createRichEditor({
 
 maths.engine.variables = {
     x: new maths.ComplexNumberType(1),
-    y: new maths.ComplexNumberType(1)
+    y: new maths.ComplexNumberType(1),
+    M: new maths.ComplexNumberType(0)
 };
+
+export function getMaths() {
+    return maths;
+}
 
 export function setAngleUnits(units) {
     angleUnits = units;
@@ -126,12 +131,14 @@ export function setOutputBitWidth(value) {
     outputBitWidth = Math.min(Math.max(value, 1), 32);
 }
 
-export async function evaluate() {
+export async function evaluate(expression = null) {
+    var returnValue = null;
+
     maths.engine.decimalPointIsComma = decimalPointIsComma;
     maths.engine.separator = decimalPointIsComma ? ";" : ",";
 
     try {
-        var expression = maths.engine.Expression.parse(editor.inter.getExpression({separator: maths.engine.separator}));
+        var expression = maths.engine.Expression.parse(expression ?? editor.inter.getExpression({separator: maths.engine.separator}));
 
         var result = await expression.evaluate();
 
@@ -148,8 +155,10 @@ export async function evaluate() {
 
             errorDialog.dialogOpen();
 
-            return;
+            return null;
         }
+
+        returnValue = result;
 
         if (outputBase == "dec") {
             result = result.toString();
@@ -173,6 +182,8 @@ export async function evaluate() {
                 den: "",
                 hex: "0x"
             }[outputBase] + result;
+
+            returnValue = new maths.ComplexNumberType(value);
         }
 
         editor.inter.getEditorArea().setText(result);
@@ -191,6 +202,8 @@ export async function evaluate() {
 
         errorDialog.dialogOpen();
     }
+
+    return returnValue;
 }
 
 $g.waitForLoad().then(function() {

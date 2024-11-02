@@ -297,6 +297,8 @@ export var AdvancedPadPage = astronaut.component("AdvancedPadPage", function(pro
 });
 
 export var AdvancedPad = astronaut.component("AdvancedPad", function(props, children) {
+    var maths = calculator.getMaths();
+
     var pad = Container({
         styleSets: [ADVANCED_PAD_STYLES, ADVANCED_PAD_PAGINATION_STYLES]
     }) ();
@@ -369,6 +371,70 @@ export var AdvancedPad = astronaut.component("AdvancedPad", function(props, chil
         return button;
     }
 
+    function incrementMemory() {
+        var button = textualAdvanced("M+", {alt: _("incrementMemory")});
+
+        button.on("click", function() {
+            calculator.evaluate().then(function(result) {
+                if (result == null) {
+                    return;
+                }
+    
+                maths.engine.variables["M"] = maths.ComplexNumberType.add(maths.engine.variables["M"], result);
+
+                calculator.evaluate("M");
+            });
+        });
+
+        return button;
+    }
+
+    function decrementMemory() {
+        var button = textualAdvanced("M-", {alt: _("decrementMemory")});
+
+        button.on("click", function() {
+            calculator.evaluate().then(function(result) {
+                if (result == null) {
+                    return;
+                }
+    
+                maths.engine.variables["M"] = maths.ComplexNumberType.subtract(maths.engine.variables["M"], result);
+
+                calculator.evaluate("M");
+            });
+        });
+
+        return button;
+    }
+
+    function setMemory() {
+        var button = textualAdvanced("MS", {alt: _("setMemory")});
+
+        button.on("click", function() {
+            calculator.evaluate().then(function(result) {
+                if (result == null) {
+                    return;
+                }
+    
+                maths.engine.variables["M"] = result;
+            });
+        });
+
+        return button;
+    }
+
+    function resetMemory() {
+        var button = textualAdvanced("MR", {alt: _("resetMemory")});
+
+        button.on("click", function() {
+            maths.engine.variables["M"] = new maths.ComplexNumberType(0);
+
+            calculator.evaluate("M");
+        });
+
+        return button;
+    }
+
     pad.add(
         ScrollableScreenContainer({
             mode: "paginated",
@@ -431,11 +497,11 @@ export var AdvancedPad = astronaut.component("AdvancedPad", function(props, chil
                 textualAdvanced("xor", {insertText: "xor"})
             ),
             AdvancedPadPage() (
-                textualAdvanced("M", {alt: _("getMemory")}),
-                textualAdvanced("M+", {alt: _("incrementMemory")}),
-                textualAdvanced("M-", {alt: _("decrementMemory")}),
-                textualAdvanced("MS", {alt: _("setMemory")}),
-                textualAdvanced("MR", {alt: _("resetMemory")}),
+                textualAdvanced("M", {alt: _("getMemory"), insertText: "M"}),
+                incrementMemory(),
+                decrementMemory(),
+                setMemory(),
+                resetMemory(),
                 textualAdvanced("rand#", {alt: _("randomFraction"), insertText: "rand#", functionName: true}),
                 textualAdvanced("randint", {alt: _("randomInteger"), insertText: "randint(", functionName: true}),
                 textualAdvanced("mean", {alt: _("mean"), insertText: "mean(", functionName: true}),
