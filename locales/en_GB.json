@@ -74,7 +74,6 @@
         "swap": "Swap x and y values",
         "changeOutputFormat": "Change output format",
         "changeOutputFormat_key": "FMT",
-        "ascii": "Enter ASCII character",
         "bitShiftLeft": "Bit shift left",
         "bitShiftRight": "Bit shift right (arithmetic)",
         "getMemory": "Get memory value",
