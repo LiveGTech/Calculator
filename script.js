@@ -21,6 +21,9 @@ export var currentLocale = null;
 export var decimalPointIsComma = false;
 export var angleUnits = "rad";
 
+export var advancedPad = null;
+export var basicPad = null;
+
 window.$g = $g;
 
 astronaut.unpack();
@@ -119,17 +122,19 @@ export async function evaluate() {
 
     try {
         var expression = maths.engine.Expression.parse(editor.inter.getExpression({separator: maths.engine.separator}));
+        console.log(expression);
 
         var result = await expression.evaluate();
+        console.log(result);
 
-        if (typeof(result) != maths.ComplexNumberType || result.real == NaN || result.imag == NaN) {
+        if (!(result instanceof maths.ComplexNumberType) || isNaN(result.real) || isNaN(result.imag)) {
             var errorDialog = await astronaut.addEphemeral(Dialog (
                 DialogContent (
                     Heading() (_("evaluationError_title_nan")),
                     Paragraph() (_("evaluationError_description")),
                 ),
                 ButtonRow({mode: "end"}) (
-                    Button({attributes: {"aui-bind": "close"}}) (("ok"))
+                    Button({attributes: {"aui-bind": "close"}}) (_("ok"))
                 )
             ));
 
@@ -239,8 +244,8 @@ $g.waitForLoad().then(function() {
             Container ({
                 styleSets: [PAD_AREA_STYLES]
             }) (
-                pads.AdvancedPad() (),
-                pads.BasicPad() ()
+                advancedPad = pads.AdvancedPad() (),
+                basicPad = pads.BasicPad() ()
             )
         )
     ));

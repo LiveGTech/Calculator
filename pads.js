@@ -21,6 +21,12 @@ const BASIC_PAD_STYLES = new astronaut.StyleGroup([
         "gap": "0.5rem",
         "direction": "ltr"
     }),
+    new astronaut.StyleSet({
+        "display": "none"
+    }, ".baseEnabled",  ".baseOff"),
+    new astronaut.StyleSet({
+        "display": "none"
+    }, ":not(.baseEnabled)", ".baseOn"),
     new astronaut.MediaQueryStyleSet(["(min-aspect-ratio: 1 / 1) and ((min-width: 450px) or (min-height: 500px)) and (min-height: 301px)"], {
         "padding-bottom": "2.4rem!important"
     })
@@ -205,8 +211,8 @@ export var PadButton = astronaut.component("PadButton", function(props, children
     return button;
 });
 
-function numericBasic(value) {
-    return PadButton({insertText: String(value)}) (String(value));
+function numericBasic(value, props = {}) {
+    return PadButton({insertText: String(value), ...props}) (String(value));
 }
 
 function textualBasic(value, props) {
@@ -285,6 +291,16 @@ export var AdvancedPad = astronaut.component("AdvancedPad", function(props, chil
         return button;
     }
 
+    function base() {
+        var button = textualAdvanced(_("base_key"), {alt: _("base")});
+
+        button.on("click", function() {
+            calculator.basicPad.toggleClass("baseEnabled");
+        });
+
+        return button;
+    }
+
     pad.add(
         ScrollableScreenContainer({
             mode: "paginated",
@@ -323,7 +339,7 @@ export var AdvancedPad = astronaut.component("AdvancedPad", function(props, chil
                 iconAdvanced("maths-factorial", {alt: _("factorial"), insertText: "!"})
             ),
             AdvancedPadPage() (
-                textualAdvanced("SET", {alt: _("set"), insertText: "="}),
+                textualAdvanced(_("set_key"), {alt: _("set"), insertText: "="}),
                 iconAdvanced("maths-sum", {alt: _("sum"), insertText: "sum", iconScale: 1.5}),
                 iconAdvanced("maths-product", {alt: _("product"), insertText: "product", iconScale: 1.5}),
                 iconAdvanced("maths-derivative", {alt: _("derivative"), insertText: "deriv", iconScale: 1.5}),
@@ -335,8 +351,8 @@ export var AdvancedPad = astronaut.component("AdvancedPad", function(props, chil
                 swapxy()
             ),
             AdvancedPadPage() (
-                textualAdvanced("BASE", {alt: _("changeBase")}),
-                textualAdvanced("BITS", {alt: _("changeBitWidth")}),
+                base(),
+                textualAdvanced(_("changeOutputFormat_key"), {alt: _("changeOutputFormat")}),
                 textualAdvanced("mod", {alt: _("mod"), insertText: "mod"}),
                 textualAdvanced("and", {insertText: "and"}),
                 textualAdvanced("or", {insertText: "or"}),
@@ -365,13 +381,29 @@ export var AdvancedPad = astronaut.component("AdvancedPad", function(props, chil
 });
 
 export var BasicPad = astronaut.component("BasicPad", function(props, children) {
+    var separatorChar = calculator.decimalPointIsComma ? ";" : ",";
+    var decimalPoint = calculator.decimalPointIsComma ? "," : ".";
+
     var clearAll = textualBasic("AC", {alt: "Clear all input"});
     var brackets = textualBasic("( )");
-    var square = iconBasic("maths-square", {alt: _("square"), insertText: "^2", landscapeRow: 2, landscapeColumn: 5});
-    var power = iconBasic("maths-power", {alt: _("power"), insertText: "^", landscapeRow: 1, landscapeColumn: 5});
-    var squareRoot = iconBasic("maths-sqrt", {alt: _("sqrt"), insertText: "sqrt", landscapeRow: 2, landscapeColumn: 4});
-    var fraction = iconBasic("maths-frac", {alt: _("frac"), insertText: "over", iconScale: 1.5, landscapeRow: 1, landscapeColumn: 4});
-    var exponent = iconBasic("maths-exp", {alt: _("exp"), iconScale: 1.5});
+    var separator = textualBasic(separatorChar, {insertText: separatorChar, classes: ["baseOff"]});
+    var square = iconBasic("maths-square", {alt: _("square"), insertText: "^2", landscapeRow: 2, landscapeColumn: 5, classes: ["baseOff"]});
+    var power = iconBasic("maths-power", {alt: _("power"), insertText: "^", landscapeRow: 1, landscapeColumn: 5, classes: ["baseOff"]});
+    var squareRoot = iconBasic("maths-sqrt", {alt: _("sqrt"), insertText: "sqrt", landscapeRow: 2, landscapeColumn: 4, classes: ["baseOff"]});
+    var fraction = iconBasic("maths-frac", {alt: _("frac"), insertText: "over", iconScale: 1.5, landscapeRow: 1, landscapeColumn: 4, classes: ["baseOff"]});
+    var exponent = iconBasic("maths-exp", {alt: _("exp"), iconScale: 1.5, classes: ["baseOff"]});
+
+    var multiply = textualBasic("×", {alt: _("multiply"), insertText: "×", classes: ["baseOff"]});
+    var divide = textualBasic("÷", {alt: _("divide"), insertText: "÷", classes: ["baseOff"]});
+    var add = textualBasic("+", {alt: _("add"), insertText: "+", classes: ["baseOff"]});
+    var subtract = textualBasic("−", {alt: _("subtract"), insertText: "-", classes: ["baseOff"]});
+    var decimal = textualBasic(decimalPoint, {insertText: decimalPoint, classes: ["baseOff"]});
+
+    var baseAdd = textualBasic("+", {alt: _("add"), insertText: "+", classes: ["baseOn"]});
+    var baseSubtract = textualBasic("−", {alt: _("subtract"), insertText: "-", classes: ["baseOn"]});
+    var baseBin = textualBasic(_("baseBin_key"), {alt: _("baseBin"), insertText: "0b", classes: ["baseOn"]});
+    var baseOct = textualBasic(_("baseOct_key"), {alt: _("baseOct"), insertText: "0o", classes: ["baseOn"]});
+    var baseHex = textualBasic(_("baseHex_key"), {alt: _("baseHex"), insertText: "0x", classes: ["baseOn"]});
 
     var backspace = iconBasic("backspace", {alt: _("backspace")});
     var evaluate = PadButton({type: "highlight", alt: _("evaluate")}) ("=");
@@ -455,16 +487,13 @@ export var BasicPad = astronaut.component("BasicPad", function(props, children) 
         }
     });
 
-    var separator = calculator.decimalPointIsComma ? ";" : ",";
-    var decimalPoint = calculator.decimalPointIsComma ? "," : ".";
-
     return Section({
         styleSets: [BASIC_PAD_STYLES]
     }) (
-        clearAll, brackets, textualBasic(separator, {insertText: separator}), square, power,
-        numericBasic(7), numericBasic(8), numericBasic(9), squareRoot, fraction,
-        numericBasic(4), numericBasic(5), numericBasic(6), textualBasic("×", {alt: _("multiply"), insertText: "×"}), textualBasic("÷", {alt: _("divide"), insertText: "÷"}),
-        numericBasic(1), numericBasic(2), numericBasic(3), textualBasic("+", {alt: _("add"), insertText: "+"}), textualBasic("−", {alt: _("subtract"), insertText: "-"}),
-        numericBasic(0), textualBasic(decimalPoint, {insertText: decimalPoint}), exponent, backspace, evaluate
+        clearAll, brackets, separator, square, power, baseBin, baseOct, baseHex,
+        numericBasic(7), numericBasic(8), numericBasic(9), squareRoot, fraction, numericBasic("E", {classes: ["baseOn"]}), numericBasic("F", {classes: ["baseOn"]}),
+        numericBasic(4), numericBasic(5), numericBasic(6), multiply, divide, numericBasic("C", {classes: ["baseOn"]}), numericBasic("D", {classes: ["baseOn"]}),
+        numericBasic(1), numericBasic(2), numericBasic(3), add, subtract, numericBasic("A", {classes: ["baseOn"]}), numericBasic("B", {classes: ["baseOn"]}),
+        numericBasic(0), decimal, exponent, baseAdd, baseSubtract, backspace, evaluate
     );
 });
