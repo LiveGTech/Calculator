@@ -525,7 +525,7 @@ export var BasicPad = astronaut.component("BasicPad", function(props, children) 
     var power = iconBasic("maths-power", {alt: _("power"), insertText: "^", landscapeRow: 1, landscapeColumn: 5, classes: ["baseOff"]});
     var squareRoot = iconBasic("maths-sqrt", {alt: _("sqrt"), insertText: "sqrt", landscapeRow: 2, landscapeColumn: 4, classes: ["baseOff"]});
     var fraction = iconBasic("maths-frac", {alt: _("frac"), insertText: "over", iconScale: 1.5, landscapeRow: 1, landscapeColumn: 4, classes: ["baseOff"]});
-    var exponent = iconBasic("maths-exp", {alt: _("exp"), iconScale: 1.5, classes: ["baseOff"]});
+    var exponent = iconBasic("maths-exp", {alt: _("exp"), insertText: "×10^", iconScale: 1.5, classes: ["baseOff"]});
 
     var multiply = textualBasic("×", {alt: _("multiply"), insertText: "×", classes: ["baseOff"]});
     var divide = textualBasic("÷", {alt: _("divide"), insertText: "÷", classes: ["baseOff"]});
@@ -593,14 +593,6 @@ export var BasicPad = astronaut.component("BasicPad", function(props, children) 
         event.preventDefault();
 
         lastFocusedEditorArea?.focus();
-    });
-
-    exponent.on("click", function(event) {
-        calculator.editor.inter.insertText("*");
-        calculator.editor.inter.insertText("10");
-        calculator.editor.inter.insertText("^");
-
-        event.preventDefault();
     });
 
     backspace.on("click", function(event) {
