@@ -20,6 +20,8 @@ var richMaths = await import("./lib/formulaic/richeditor/richmaths.js");
 export var currentLocale = null;
 export var decimalPointIsComma = false;
 export var angleUnits = "rad";
+export var outputBase = "dec";
+export var outputBitWidth = 32;
 
 export var advancedPad = null;
 export var basicPad = null;
@@ -116,18 +118,24 @@ export function swapxy() {
     maths.engine.variables["y"] = temp;
 }
 
+export function setOutputBase(value) {
+    outputBase = value;
+}
+
+export function setOutputBitWidth(value) {
+    outputBitWidth = Math.min(Math.max(value, 1), 32);
+}
+
 export async function evaluate() {
     maths.engine.decimalPointIsComma = decimalPointIsComma;
     maths.engine.separator = decimalPointIsComma ? ";" : ",";
 
     try {
         var expression = maths.engine.Expression.parse(editor.inter.getExpression({separator: maths.engine.separator}));
-        console.log(expression);
 
         var result = await expression.evaluate();
-        console.log(result);
 
-        if (!(result instanceof maths.ComplexNumberType) || isNaN(result.real) || isNaN(result.imag)) {
+        if (!(result instanceof maths.ComplexNumberType) || isNaN(result.real) || isNaN(result.imag) || (outputBase != "dec" && result.imag != 0)) {
             var errorDialog = await astronaut.addEphemeral(Dialog (
                 DialogContent (
                     Heading() (_("evaluationError_title_nan")),
@@ -142,11 +150,29 @@ export async function evaluate() {
 
             return;
         }
-        
-        result = result.toString();
 
-        if (decimalPointIsComma) {
-            result = result.replace(/\./g, ",");
+        if (outputBase == "dec") {
+            result = result.toString();
+
+            if (decimalPointIsComma) {
+                result = result.replace(/\./g, ",");
+            }
+        } else {
+            var value = result.real & ((2 ** (outputBitWidth)) - 1);
+
+            result = value.toString({
+                bin: 2,
+                oct: 8,
+                den: 10,
+                hex: 16
+            }[outputBase]);
+
+            result = {
+                bin: "0b",
+                oct: "0o",
+                den: "",
+                hex: "0x"
+            }[outputBase] + result;
         }
 
         editor.inter.getEditorArea().setText(result);

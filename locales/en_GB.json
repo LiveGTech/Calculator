@@ -9,6 +9,8 @@
         "calculator": "Calculator",
 
         "ok": "OK",
+        "cancel": "Cancel",
+        "save": "Save",
 
         "backspace": "Backspace",
         "evaluate": "Evaluate",
@@ -85,6 +87,18 @@
         "mean": "Find mean",
         "npr": "Find number of permutations",
         "ncr": "Find number of combinations",
+
+        "outputFormat_title": "Output format",
+        "outputFormat_description": "The format you choose will be applied to the result of the next expression you evaluate.",
+
+        "outputFormat_base": "Base/display format",
+        "outputFormat_base_dec": "Decimal (scientific)",
+        "outputFormat_base_den": "Denary",
+        "outputFormat_base_bin": "Binary",
+        "outputFormat_base_oct": "Octal",
+        "outputFormat_base_hex": "Hexadecimal",
+
+        "outputFormat_bitWidth": "Bit width",
 
         "evaluationError_title_generic": "Error while evaluating expression",
         "evaluationError_title_syntax": "Syntax error",

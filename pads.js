@@ -231,6 +231,62 @@ function iconAdvanced(icon, props) {
     return PadButton({...props, icon, type: "advanced", iconType: "dark"}) ();
 }
 
+export var OutputFormatDialog = astronaut.component("OutputFormatDialog", function(props, children) {
+    var baseInput = SelectionInput({value: calculator.outputBase}) (
+        ...["dec", "bin", "oct", "den", "hex"].map((base) => SelectionInputOption({value: base}) (_(`outputFormat_base_${base}`)))
+    );
+
+    var bitWidthInput = NumericalInput({min: 1, max: 32, value: calculator.outputBitWidth}) ();
+
+    var saveButton = Button({attributes: {"aui-bind": "close"}}) (_("save"));
+
+    var dialog = Dialog({
+        styles: {
+            "max-width": "500px"
+        }
+    }) (
+        DialogContent (
+            Heading() (_("outputFormat_title")),
+            Paragraph() (_("outputFormat_description")),
+            Label (
+                Text(_("outputFormat_base")),
+                baseInput
+            ),
+            Label (
+                Text(_("outputFormat_bitWidth")),
+                bitWidthInput
+            )
+        ),
+        ButtonRow({mode: "end"}) (
+            saveButton,
+            Button({mode: "secondary", attributes: {"aui-bind": "close"}}) (_("cancel"))
+        )
+    );
+
+    function updateBitWidth() {
+        if (baseInput.getValue() == "dec") {
+            bitWidthInput.setAttribute("disabled", true);
+        } else {
+            bitWidthInput.removeAttribute("disabled");
+        }
+    }
+
+    baseInput.on("change", function() {
+        updateBitWidth();
+    });
+
+    saveButton.on("click", function() {
+        calculator.setOutputBase(baseInput.getValue());
+        calculator.setOutputBitWidth(Number(bitWidthInput.getValue()));
+
+        dialog.dialogClose();
+    });
+
+    updateBitWidth();
+
+    return dialog;
+});
+
 export var AdvancedPadPage = astronaut.component("AdvancedPadPage", function(props, children) {
     return Container({
         ...props,
@@ -301,6 +357,18 @@ export var AdvancedPad = astronaut.component("AdvancedPad", function(props, chil
         return button;
     }
 
+    function changeOutputFormat() {
+        var button = textualAdvanced(_("changeOutputFormat_key"), {alt: _("changeOutputFormat")});
+
+        button.on("click", async function() {
+            var dialog = await astronaut.addEphemeral(OutputFormatDialog() ());
+
+            dialog.dialogOpen();
+        });
+
+        return button;
+    }
+
     pad.add(
         ScrollableScreenContainer({
             mode: "paginated",
@@ -352,7 +420,7 @@ export var AdvancedPad = astronaut.component("AdvancedPad", function(props, chil
             ),
             AdvancedPadPage() (
                 base(),
-                textualAdvanced(_("changeOutputFormat_key"), {alt: _("changeOutputFormat")}),
+                changeOutputFormat(),
                 textualAdvanced("mod", {alt: _("mod"), insertText: "mod"}),
                 textualAdvanced("and", {insertText: "and"}),
                 textualAdvanced("or", {insertText: "or"}),
