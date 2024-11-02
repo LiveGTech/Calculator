@@ -289,6 +289,8 @@ $g.waitForLoad().then(function() {
         )
     ));
 
+    editor.inter.getEditorArea().setAttribute("spellcheck", "false");
+
     setTimeout(function() {
         editor.inter.getEditorArea().focus();
     });
